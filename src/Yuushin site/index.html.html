@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yuushin - Cœur Courageux, Style Éternel</title>
+    <link rel="stylesheet" href="style.css.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+             <!-- Image du logo (ajustez le chemin du fichier selon son emplacement) -->
+             <img src="images/Yuushin.jpg"  width="100" height="100"    alt="Logo Yuushin" class="logo-image">
+            <h1>Yuushin</h1>
+            <p>Cœur Courageux, Style Éternel</p>
+        </div>
+        <button id="theme-toggle">Mode Sombre</button>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="filterCategory('all')">Tous les Produits</a></li>
+                <li><a href="#" onclick="filterCategory('t-shirts')">T-shirts</a></li>
+                <li><a href="#" onclick="filterCategory('hoodies')">Hoodies</a></li>
+                <li><a href="#" onclick="filterCategory('accessories')">Accessoires</a></li>
+            </ul>
+        </nav>
+        <button id="cart-btn">Panier (0)</button>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Bienvenue chez Yuushin</h2>
+            <p>Découvrez notre collection exclusive, alliant confort et style intemporel. Parfait pour ceux qui recherchent un vêtement moderne et élégant.</p>
+        </section>
+
+        <section class="product-list">
+            <div class="gallery">
+                <div class="item t-shirts" data-id="1">
+                    <img src="images/t-shirt_blanc.jpeg" alt="T-shirt Yuushin">
+                    <p>T-shirt Yuushin</p>
+                    <p class="description">Un T-shirt moderne, confortable, et parfait pour toutes les occasions.</p>
+                    <div class="options">
+                        <p>Taille :</p>
+                        <div class="sizes">
+                            <button class="size-circle" data-size="XS">XS</button>
+                            <button class="size-circle" data-size="S">S</button>
+                            <button class="size-circle" data-size="M">M</button>
+                            <button class="size-circle" data-size="L">L</button>
+                            <button class="size-circle" data-size="XL">XL</button>
+                        </div>
+                        <p>Couleur :</p>
+                        <div class="colors">
+                            <button class="color-circle" data-color="Blanc" style="background-color: silver;"></button>
+                            <button class="color-circle" data-color="Noir" style="background-color: black;"></button>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+
+                <div class="item hoodies" data-id="2">
+                    <img src="images/pull_Yuushin.jpg"   alt="Hoodie Yuushin">
+                    <p>Hoodie Yuushin</p>
+                    <p class="description">Un hoodie confortable pour affronter le froid avec style.</p>
+                    <div class="options">
+                        <p>Taille :</p>
+                        <div class="sizes">
+                            <button class="size-circle" data-size="S">S</button>
+                            <button class="size-circle" data-size="M">M</button>
+                            <button class="size-circle" data-size="L">L</button>
+                            <button class="size-circle" data-size="XL">XL</button>
+                        </div>
+                        <p>Couleur :</p>
+                        <div class="colors">
+                            <button class="color-circle" data-color="Gris" style="background-color: silver;"></button>
+                            <button class="color-circle" data-color="Noir" style="background-color: black;"></button>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+
+                <div class="item accessories" data-id="3">
+                    <img src="images/Accessoire1_blanc.jpeg.jpeg" alt="Accessoire Yuushin">
+                    <p>Accessoire Yuushin</p>
+                    <p class="description">Complétez votre look avec notre accessoire exclusif.</p>
+                    <div class="options">
+                        <p>Couleur :</p>
+                        <div class="colors">
+                            <button class="color-circle" data-color="Argent" style="background-color: silver;"></button>
+                            <button class="color-circle" data-color="Or" style="background-color: black;"></button>
+                        </div>
+                    </div>
+                    <button class="add-to-cart">Ajouter au panier</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="cart-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>Votre Panier</h2>
+            <ul id="cart-items"></ul>
+            <p id="total-price">Total : 0,00€</p>
+            <button id="checkout-btn">Passer à la caisse</button>
+            <button id="close-cart">Fermer</button>
+        </div>
+    </div>
+
+    <script src="script.js.js"></script>
+
+    <div class="item t-shirts" data-id="1">
+        <img src="images/t-shirt_blanc.jpeg" alt="T-shirt Yuushin">
+        <p>T-shirt Yuushin</p>
+        <p class="description">Un T-shirt moderne, confortable, et parfait pour toutes les occasions.</p>
+        <div class="options">
+            <p>Taille :</p>
+            <div class="sizes">
+                <button class="size-circle" data-size="XS">XS</button>
+                <button class="size-circle" data-size="S">S</button>
+                <button class="size-circle" data-size="M">M</button>
+                <button class="size-circle" data-size="L">L</button>
+                <button class="size-circle" data-size="XL">XL</button>
+            </div>
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="Blanc" style="background-color: white;"></button>
+                <button class="color-circle" data-color="Noir" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    
+    <div class="item hoodies" data-id="2">
+        <img src="images/hoodie1.jpg" alt="Hoodie Yuushin">
+        <p>Hoodie Yuushin</p>
+        <p class="description">Un hoodie confortable pour affronter le froid avec style.</p>
+        <div class="options">
+            <p>Taille :</p>
+            <div class="sizes">
+                <button class="size-circle" data-size="S">S</button>
+                <button class="size-circle" data-size="M">M</button>
+                <button class="size-circle" data-size="L">L</button>
+                <button class="size-circle" data-size="XL">XL</button>
+            </div>
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="Blanc" style="background-color: white;"></button>
+                <button class="color-circle" data-color="Noir" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    
+    <div class="item accessories" data-id="3">
+        <img src="images/accessory1.jpg" alt="Accessoire Yuushin">
+        <p>Accessoire Yuushin</p>
+        <p class="description">Complétez votre look avec notre accessoire exclusif.</p>
+        <div class="options">
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="Blanc" style="background-color: white;"></button>
+                <button class="color-circle" data-color="Noir" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+
+
+    <div class="item t-shirts" data-id="1">
+        <img src="images/tshirt_white.jpg" alt="T-shirt Yuushin" class="product-image">
+        <p>T-shirt Yuushin</p>
+        <p class="description">Un T-shirt moderne, confortable, et parfait pour toutes les occasions.</p>
+        <div class="options">
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="white" data-image="images/tshirt_white.jpg" style="background-color: white;"></button>
+                <button class="color-circle" data-color="black" data-image="images/tshirt_black.jpg" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    
+    <div class="item hoodies" data-id="2">
+        <img src="images/pull_Yuushin.jpg" alt="Hoodie Yuushin" class="product-image">
+        <p>Hoodie Yuushin</p>
+        <p class="description">Un hoodie confortable pour affronter le froid avec style.</p>
+        <div class="options">
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="white" data-image="images/pull_Yuushin.jpg" style="background-color: white;"></button>
+                <button class="color-circle" data-color="black" data-image="images/hoodie_black.jpg" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+
+    <div class="item accessories" data-id="3">
+        <img src="images/Accessoire1_blanc.jpeg.jpeg" alt="Accessoire Yuushin" class="product-image">
+        <p>Accessoire Yuushin</p>
+        <p class="description">Complétez votre look avec notre accessoire exclusif.</p>
+        <div class="options">
+            <p>Couleur :</p>
+            <div class="colors">
+                <button class="color-circle" data-color="white" data-image="images/Accessoire1_blanc.jpg" style="background-color: white;"></button>
+                <button class="color-circle" data-color="black" data-image="images/Accessoire1_noir.jpg" style="background-color: black;"></button>
+            </div>
+        </div>
+        <button class="add-to-cart">Ajouter au panier</button>
+    </div>
+    
+    
+    
+</body>
+</html>
