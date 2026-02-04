@@ -1,0 +1,177 @@
+/* === RESET === */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* === FOND ROUGE & NOIR NÉON === */
+body {
+  background: radial-gradient(circle at 20% 20%, #1a0000, #000000 80%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+
+/* === STRUCTURE === */
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+  width: 100%;
+  max-width: 1400px;
+  height: 90vh;
+}
+
+/* === BARRE LATÉRALE === */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  background: rgba(50, 0, 0, 0.2);
+  padding: 20px 10px;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  border: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+.side-img {
+  width: 65px;
+  height: 65px;
+  transition: 0.3s;
+  cursor: pointer;
+  filter: drop-shadow(0 0 10px red);
+}
+.side-img:hover {
+  transform: scale(1.15);
+  filter: drop-shadow(0 0 25px red);
+}
+
+/* === CHAT === */
+.chat-container {
+  width: 500px;
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 0, 0, 0.8);
+  border-radius: 20px;
+  border: 1px solid red;
+  box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+/* === EN-TÊTE === */
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: linear-gradient(90deg, #300000, #100000);
+  padding: 15px;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+}
+
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid red;
+  box-shadow: 0 0 15px red;
+  object-fit: cover;
+}
+
+h1 {
+  color: #ff2222;
+  text-shadow: 0 0 10px red, 0 0 20px rgba(255, 0, 0, 0.5);
+}
+
+/* === MESSAGES === */
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.messages p {
+  max-width: 85%;
+  padding: 10px 15px;
+  border-radius: 12px;
+  line-height: 1.4;
+  font-size: 0.95em;
+}
+
+/* MESSAGES UTILISATEUR */
+.user {
+  align-self: flex-end;
+  background: rgba(255, 0, 0, 0.3);
+  border: 1px solid red;
+  box-shadow: 0 0 10px red;
+}
+
+/* MESSAGES BOT */
+.bot {
+  align-self: flex-start;
+  background: rgba(30, 30, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(255, 0, 0, 0.3);
+}
+
+/* === FORMULAIRE === */
+.form {
+  display: flex;
+  gap: 10px;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.8);
+  border-top: 1px solid rgba(255, 0, 0, 0.4);
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  outline: none;
+}
+
+input[type="text"]:focus {
+  background: rgba(255, 0, 0, 0.2);
+  box-shadow: 0 0 10px red;
+}
+
+button {
+  background: linear-gradient(90deg, #ff0000, #660000);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: 0.3s;
+  box-shadow: 0 0 10px red;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #ff3333, #ff0000);
+  transform: scale(1.05);
+}
+
+/* Scrollbar rouge */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background: red;
+  border-radius: 10px;
+}

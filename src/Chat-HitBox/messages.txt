@@ -1,0 +1,12 @@
+[14:30:01] Toi : coucou cv ?
+[14:30:01] Chat-Hitbox : Hmm 🤔 bonne question ! Je vais chercher une réponse plus précise.
+[14:30:07] Toi : salut
+[14:30:07] Chat-Hitbox : Salut 👋 Comment te sens-tu aujourd’hui ?
+[14:30:12] Toi : je me sens mal
+[14:30:12] Chat-Hitbox : Je n’ai pas bien compris 😅. Peux-tu reformuler autrement ?
+[14:30:19] Toi : j'ai un rhume
+[14:30:19] Chat-Hitbox : Repos, hydratation et mouchoirs 🧻 ! Un bon sommeil aidera ton système immunitaire 😴.
+[14:30:27] Toi : j'ai le cancer
+[14:30:27] Chat-Hitbox : Je n’ai pas bien compris 😅. Peux-tu reformuler autrement ?
+[14:30:35] Toi : j'ai une thumeur
+[14:30:35] Chat-Hitbox : Je n’ai pas bien compris 😅. Peux-tu reformuler autrement ?
