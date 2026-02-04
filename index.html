@@ -28,7 +28,7 @@
       <a href="#contact">Contact</a>
     </nav>
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu">
+    <button class="nav-toggle" aria-label="Ouvrir le menu de navigation">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -63,7 +63,7 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-orbit">
+        <div class="hero-orbit" aria-hidden="true">
           <div class="hero-orbit-circle"></div>
           <div class="hero-orbit-dot"></div>
         </div>
@@ -76,10 +76,10 @@
       </div>
     </section>
 
-    <!-- ===== BANDEAU PHOTOS NATURE (PARALLÉLOGRAMMES) ===== -->
-    <section class="section nature-strip">
+    <!-- ===== BANDEAU PHOTOS NATURE ===== -->
+    <section class="section nature-strip" aria-labelledby="nature-title">
       <div class="section-header">
-        <h2>Ambiance nature</h2>
+        <h2 id="nature-title">Ambiance nature</h2>
         <p>Un aperçu des paysages et textures qui inspirent mon univers.</p>
       </div>
 
@@ -87,27 +87,30 @@
         <div class="parallelogram-card">
           <div class="parallelogram-inner">
             <img src="img/Photo_montagne.jpg"
-                 alt="Photo de montagne"
+                 alt="Photo de montagne en Corse"
                  width="310"
-                 height="233">
+                 height="233"
+                 loading="lazy">
           </div>
         </div>
 
         <div class="parallelogram-card">
           <div class="parallelogram-inner">
             <img src="img/photo_mers.jpeg"
-                 alt="Photo mers"
+                 alt="Photo de la mer"
                  width="358"
-                 height="202">
+                 height="202"
+                 loading="lazy">
           </div>
         </div>
 
         <div class="parallelogram-card">
           <div class="parallelogram-inner">
             <img src="img/paysage_grotte.jpg"
-                 alt="Photo de paysage grotte"
+                 alt="Photo de paysage de grotte"
                  width="310"
-                 height="387">
+                 height="387"
+                 loading="lazy">
           </div>
         </div>
       </div>
@@ -176,10 +179,12 @@
       </div>
 
       <div class="skills-grid">
+        <!-- cartes de compétences (inchangées) -->
+        <!-- VS Code -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/vscode.png" alt="Logo VS Code" class="skill-logo" width="40" height="40">
+              <img src="img/vscode.png" alt="Logo VS Code" class="skill-logo" width="40" height="40" loading="lazy">
               <span class="skill-name">VS Code</span>
             </div>
             <span class="skill-percent">60%</span>
@@ -189,10 +194,11 @@
           </div>
         </div>
 
+        <!-- HTML5 -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/html_logo.png" alt="Logo HTML5" class="skill-logo" width="24" height="40">
+              <img src="img/html_logo.png" alt="Logo HTML5" class="skill-logo" width="24" height="40" loading="lazy">
               <span class="skill-name">HTML5</span>
             </div>
             <span class="skill-percent">67%</span>
@@ -202,10 +208,11 @@
           </div>
         </div>
 
+        <!-- CSS3 -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/css.png" alt="Logo CSS3" class="skill-logo" width="28" height="40">
+              <img src="img/css.png" alt="Logo CSS3" class="skill-logo" width="28" height="40" loading="lazy">
               <span class="skill-name">CSS3</span>
             </div>
             <span class="skill-percent">50%</span>
@@ -215,10 +222,11 @@
           </div>
         </div>
 
+        <!-- JavaScript -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/javascript.png" alt="Logo JavaScript" class="skill-logo" width="40" height="37">
+              <img src="img/javascript.png" alt="Logo JavaScript" class="skill-logo" width="40" height="37" loading="lazy">
               <span class="skill-name">JavaScript</span>
             </div>
             <span class="skill-percent">25%</span>
@@ -228,10 +236,11 @@
           </div>
         </div>
 
+        <!-- Figma -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/figma.png" alt="Logo Figma" class="skill-logo" width="23" height="40">
+              <img src="img/figma.png" alt="Logo Figma" class="skill-logo" width="23" height="40" loading="lazy">
               <span class="skill-name">Figma</span>
             </div>
             <span class="skill-percent">45%</span>
@@ -241,10 +250,11 @@
           </div>
         </div>
 
+        <!-- Canva -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/canva.png" alt="Logo Canva" class="skill-logo" width="35" height="40">
+              <img src="img/canva.png" alt="Logo Canva" class="skill-logo" width="35" height="40" loading="lazy">
               <span class="skill-name">Canva</span>
             </div>
             <span class="skill-percent">85%</span>
@@ -254,10 +264,11 @@
           </div>
         </div>
 
+        <!-- GitHub -->
         <div class="skill-card">
           <div class="skill-header">
             <div class="skill-info">
-              <img src="img/github.png" alt="Logo GitHub" class="skill-logo" width="33" height="40">
+              <img src="img/github.png" alt="Logo GitHub" class="skill-logo" width="33" height="40" loading="lazy">
               <span class="skill-name">GitHub</span>
             </div>
             <span class="skill-percent">30%</span>
@@ -288,7 +299,8 @@
                  alt="Mini chat médical"
                  class="project-image"
                  width="330"
-                 height="158">
+                 height="158"
+                 loading="lazy">
           </div>
           <h3>
             <a href="src/Chat-HitBox/index.php" target="_blank" rel="noopener">
@@ -312,7 +324,8 @@
                  alt="Site web gaming"
                  class="project-image"
                  width="384"
-                 height="158">
+                 height="158"
+                 loading="lazy">
           </div>
           <h3>
             <a href="src/gaming-site/index.html" target="_blank" rel="noopener">
@@ -336,9 +349,11 @@
                  alt="Yuushin - Prototype site web habillé"
                  class="project-image"
                  width="330"
-                 height="158">
+                 height="158"
+                 loading="lazy">
           </div>
           <h3>
+            <!-- On garde le chemin avec l’espace car tu ne peux pas le changer -->
             <a href="src/Yuushin site/index.html" target="_blank" rel="noopener">
               Yuushin - Prototype site web habillé
             </a>
@@ -416,10 +431,11 @@
         <figure class="gallery-item card">
           <div class="gallery-image-wrapper">
             <img src="img/Pizza_adobe.png"
-                 alt="Pizza Adobe Illustrator"
+                 alt="Illustration de pizza réalisée sur Adobe Illustrator"
                  class="gallery-image"
                  width="204"
-                 height="290">
+                 height="290"
+                 loading="lazy">
           </div>
           <figcaption class="gallery-caption">
             Création Pizza réalisée sur Adobe Illustrator.
@@ -432,7 +448,8 @@
                  alt="Moodboard Corsica Games Week"
                  class="gallery-image"
                  width="254"
-                 height="204">
+                 height="204"
+                 loading="lazy">
           </div>
           <figcaption class="gallery-caption">
             Moodboard pour la Corsica Games Week.
@@ -442,10 +459,11 @@
         <figure class="gallery-item card">
           <div class="gallery-image-wrapper">
             <img src="img/Parfum-Affiche.jpg"
-                 alt="Affiche de Parfum"
+                 alt="Affiche de parfum fictif"
                  class="gallery-image"
                  width="204"
-                 height="288">
+                 height="288"
+                 loading="lazy">
           </div>
           <figcaption class="gallery-caption">
             Affiche de parfum fictif mêlant nature et design minimaliste.
@@ -457,10 +475,11 @@
         <figure class="gallery-item card">
           <div class="gallery-image-wrapper">
             <img src="img/Affiche_Draculas.png"
-                 alt="Affiche Spectacle Draculas"
+                 alt="Affiche pour le spectacle Draculas"
                  class="gallery-image"
                  width="204"
-                 height="289">
+                 height="289"
+                 loading="lazy">
           </div>
           <figcaption class="gallery-caption">
             Affiche Draculas.
