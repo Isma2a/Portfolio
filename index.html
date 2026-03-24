@@ -1,545 +1,181 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-        content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI : projets web, mini-jeu, créations visuelles.">
+  <meta name="description" content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI.">
   <title>Ismaël Saghir — Portfolio</title>
 
-  <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
-            base: "#f8f4ef",      // fond principal (blanc cassé)
-            baseSoft: "#e4d8cc",  // beige clair
-            brown: "#7f604c",     // brun principal
-            brownSoft: "#c0a894", // brun clair
-            ink: "#1f2933",       // texte gris/noir
-            muted: "#6b7280",     // texte secondaire
-            accent: "#3a2a23"     // brun très foncé (accents / hover)
+            base: "#f8f4ef",      
+            baseSoft: "#e4d8cc",  
+            brown: "#7f604c",     
+            brownSoft: "#c0a894", 
+            ink: "#1f2933",       
+            muted: "#6b7280",     
+            accent: "#3a2a23",
+            // Dark Mode Colors
+            darkBase: "#12100e",
+            darkCard: "#1c1816",
+            darkText: "#e4d8cc"
+          },
+          animation: {
+            'float': 'float 5s ease-in-out infinite',
+          },
+          keyframes: {
+            float: {
+              '0%, 100%': { transform: 'translateY(0px) rotate(0deg)' },
+              '50%': { transform: 'translateY(-15px) rotate(2deg)' },
+            }
           }
         }
       }
     }
   </script>
+  <style>
+    .glass { @apply bg-white/70 dark:bg-darkCard/70 backdrop-blur-md border border-white/20 dark:border-white/5; }
+  </style>
 </head>
 
-<body class="min-h-screen bg-base text-ink antialiased">
-  <!-- HEADER -->
-  <header class="sticky top-0 z-30 border-b border-brown/20 bg-base/90 backdrop-blur">
+<body class="min-h-screen bg-base dark:bg-darkBase text-ink dark:text-darkText transition-colors duration-300 antialiased">
+  
+  <header class="sticky top-0 z-50 border-b border-brown/10 dark:border-white/5 bg-base/80 dark:bg-darkBase/80 backdrop-blur-lg">
     <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-      <a href="#top" class="inline-flex items-center gap-3">
-        <span class="flex h-9 w-9 items-center justify-center rounded-full border border-brown bg-baseSoft text-xs font-semibold tracking-[0.14em] uppercase text-accent shadow-sm">
-          IS
-        </span>
-        <span class="hidden text-xs text-muted sm:inline">
-          Portfolio • BUT MMI
-        </span>
+      <a href="#top" class="inline-flex items-center gap-3 group">
+        <img src="img/photo_isma.jpg" alt="IS" class="h-9 w-9 rounded-full border border-brown/50 object-cover shadow-sm group-hover:scale-110 transition-transform">
+        <span class="hidden text-xs font-medium tracking-widest uppercase text-muted sm:inline">Ismaël Saghir</span>
       </a>
 
-      <nav class="hidden gap-6 text-xs uppercase tracking-[0.16em] text-muted md:flex">
-        <a href="#intro" class="hover:text-accent transition-colors">Intro</a>
-        <a href="#projects" class="hover:text-accent transition-colors">Projets</a>
-        <a href="#skills" class="hover:text-accent transition-colors">Compétences</a>
-        <a href="#about" class="hover:text-accent transition-colors">À propos</a>
-        <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+      <nav class="hidden gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-muted md:flex">
+        <a href="#projects" class="hover:text-brown dark:hover:text-brownSoft transition-colors">Projets</a>
+        <a href="#skills" class="hover:text-brown dark:hover:text-brownSoft transition-colors">Skills</a>
+        <a href="#about" class="hover:text-brown dark:hover:text-brownSoft transition-colors">Bio</a>
+        <a href="#contact" class="hover:text-brown dark:hover:text-brownSoft transition-colors">Contact</a>
       </nav>
 
-     <button
-      id="nav-toggle"
-     class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm md:hidden overflow-hidden"
-      aria-label="Ouvrir le menu">
-      <div class="relative flex h-4 w-4 flex-col items-center justify-center">
-      <span id="line-1" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[-5px]"></span>
-      <span id="line-2" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute"></span>
-      <span id="line-3" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[5px]"></span>
-      </div>
-    </button>
+      <div class="flex items-center gap-4">
+        <button id="theme-toggle" class="p-2 rounded-full hover:bg-brown/10 transition-colors" aria-label="Changer le thème">
+          <svg id="sun-icon" class="hidden h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" /></svg>
+          <svg id="moon-icon" class="h-5 w-5 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
+        </button>
 
-    <!-- NAV MOBILE -->
-    <nav id="nav-mobile" class="hidden border-t border-brown/20 bg-baseSoft md:hidden">
-      <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 text-xs uppercase tracking-[0.16em] text-muted">
-        <a href="#intro">Intro</a>
-        <a href="#projects">Projets</a>
-        <a href="#skills">Compétences</a>
-        <a href="#about">À propos</a>
-        <a href="#contact">Contact</a>
+        <button id="nav-toggle" class="md:hidden p-2 text-accent dark:text-darkText">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
       </div>
-    </nav>
+    </div>
   </header>
 
-  <!-- MAIN -->
-  <main id="top" class="mx-auto max-w-5xl px-4 pb-16 pt-10 space-y-24">
+  <main id="top" class="mx-auto max-w-5xl px-4 py-12 space-y-32">
 
-    <!-- INTRO -->
-    <section id="intro" class="grid items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-      <div class="space-y-6">
-        <p class="text-xs uppercase tracking-[0.22em] text-muted">
-          Ismaël Saghir — BUT MMI
-        </p>
-
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-accent">
-          Portfolio <span class="text-brown">Ismaël Saghir</span>
+    <section id="intro" class="grid items-center gap-12 md:grid-cols-2">
+      <div class="space-y-8">
+        <div class="inline-block px-3 py-1 rounded-full border border-brown/20 text-[10px] font-bold uppercase tracking-widest text-brown dark:text-brownSoft">
+          Étudiant BUT MMI — Corse
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-bold tracking-tighter text-accent dark:text-white">
+          Design <span class="text-brown italic">&</span> Code.
         </h1>
-
-        <p class="max-w-xl text-sm text-muted leading-relaxed">
-          Étudiant en Métiers du Multimédia et de l’Internet, je conçois des interfaces sobres,
-          des petites expériences interactives et des visuels inspirés par l’urbain, les matières
-          naturelles et la lumière.
+        <p class="max-w-md text-base text-muted leading-relaxed">
+          Je m'appelle Ismaël, je conçois des interfaces minimalistes et des expériences interactives inspirées par la matière et la lumière.
         </p>
-
-        <div class="flex flex-wrap gap-3">
-          <a href="#projects"
-             class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/20 hover:bg-brown transition-colors">
-            Voir les projets
-          </a>
-          <a href="#about"
-             class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-accent hover:bg-baseSoft hover:border-brown transition-colors">
-            À propos de moi
-          </a>
+        <div class="flex gap-4 pt-4">
+          <a href="#projects" class="bg-accent dark:bg-brown px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest text-white hover:scale-105 transition-transform shadow-lg shadow-accent/20">Projets</a>
+          <a href="#contact" class="border border-brown/30 px-8 py-3 rounded-full text-[10px] font-bold uppercase tracking-widest hover:bg-brown/5 transition-colors">Contact</a>
         </div>
-
-        <p class="text-xs text-muted max-w-md">
-          Un site one‑page pensé comme un carnet de projets : peu de couleurs, des blancs généreux
-          et des cartes mises en valeur par des ombres discrètes.
-        </p>
       </div>
 
-      <!-- bloc visuel + pseudo 3D -->
-      <div class="relative">
-  <div class="relative mx-auto flex h-72 w-full max-w-xs flex-col items-center justify-end rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-6">
-    
-    <div class="absolute inset-x-6 bottom-24 h-5 rounded-full bg-brown/10 blur-sm"></div>
-
-    <div class="relative h-44 w-44 -translate-y-4">
-      <div class="absolute inset-0 overflow-hidden rounded-[40%] shadow-lg shadow-brown/25 transform hover:-translate-y-2 hover:rotate-2 transition-transform duration-500 origin-bottom border-2 border-white/50">
-        <img src="img/Corte-corse.jpg" alt="Ismaël Saghir" class="h-full w-full object-cover">
-      </div>
-      
-      <div class="pointer-events-none absolute inset-0 rounded-[40%] bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
-    </div>
-
-    <div class="relative w-full space-y-1 text-center text-xs">
-      <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
-      <p class="text-ink text-sm font-medium">
-        Corte • Ajaccio — Corse
-      </p>
-      <p class="text-[11px] text-muted">
-        Web, UI, visuels, mini‑jeu Godot.
-      </p>
-    </div>
-  </div>
-</div>
-    </section>
-
-    <!-- PROJETS AVEC ONGLET / TRI -->
-    <section id="projects" class="space-y-8">
-      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Projets</h2>
-          <p class="text-sm text-muted">
-            Sélection de travaux web, jeu et visuels réalisés en BUT MMI.
-          </p>
-        </div>
-        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
-          Filtrer par type
-        </p>
-      </header>
-
-      <!-- Onglets / filtres -->
-      <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.16em]">
-        <button data-filter="all"
-                class="filter-btn rounded-full bg-accent px-4 py-1.5 text-base text-baseSoft shadow-sm shadow-accent/30">
-          Tout
-        </button>
-        <button data-filter="web"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Web
-        </button>
-        <button data-filter="game"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Jeu
-        </button>
-        <button data-filter="visual"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Visuels
-        </button>
-      </div>
-
-      <!-- Grille projets -->
-      <div id="projects-grid" class="grid gap-6 md:grid-cols-3">
-        <!-- cartes générées en JS -->
-      </div>
-    </section>
-
-    <!-- MINI-JEU -->
-    <section id="game" class="space-y-8">
-      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Mini‑jeu : Meteor Escape</h2>
-          <p class="text-sm text-muted">
-            Prototype réalisé sur Godot et exporté pour le web.
-          </p>
-        </div>
-        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
-          Jeu • Godot • Web
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div class="space-y-3 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <h3 class="text-sm font-semibold text-accent">Concept</h3>
-          <p class="text-sm text-muted leading-relaxed">
-            Meteor Escape est un mini‑jeu où le joueur doit esquiver des météorites dans un décor
-            simple et lisible. L’objectif : travailler le rythme, les feedbacks visuels et la
-            gestion des collisions.
-          </p>
-          <p class="text-sm text-muted leading-relaxed">
-            Cette version web est un prototype de niveau, jouable directement dans le navigateur
-            ou dans une fenêtre dédiée.
-          </p>
-          <ul class="mt-2 flex flex-wrap gap-2 text-[11px] text-accent">
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Godot</li>
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Export Web</li>
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Prototype</li>
-          </ul>
-        </div>
-
-        <div class="space-y-3">
-          <div class="overflow-hidden rounded-3xl border border-brown/40 bg-baseSoft shadow-md shadow-brown/20">
-            <div class="aspect-[4/3] bg-black">
-              <iframe
-                src="Game/index.html"
-                title="Meteor Escape — mini‑jeu Godot"
-                loading="lazy"
-                class="h-full w-full border-0"
-                allowfullscreen
-              ></iframe>
+      <div class="relative group">
+        <div class="relative mx-auto flex h-80 w-full max-w-xs flex-col items-center justify-center rounded-[3rem] glass shadow-2xl transition-all duration-700">
+          <div class="absolute -inset-4 bg-brown/5 blur-3xl rounded-full opacity-50 group-hover:opacity-100 transition-opacity"></div>
+          
+          <div class="relative h-56 w-56 animate-float">
+            <div class="absolute inset-0 overflow-hidden rounded-[40%] border-4 border-white dark:border-white/10 shadow-2xl">
+              <img src="img/photo_isma.jpg" class="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100">
             </div>
+            <div class="absolute inset-0 rounded-[40%] bg-gradient-to-tr from-brown/20 to-transparent pointer-events-none"></div>
           </div>
 
-          <button
-            id="game-window-btn"
-            type="button"
-            class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-accent shadow-sm shadow-brown/20 hover:bg-baseSoft hover:border-brown transition-colors">
-            Ouvrir en fenêtre 1200×1080
-          </button>
-
-          <p class="text-xs text-muted">
-            Astuce : pour un meilleur confort, joue en plein écran sur ordinateur. Sur mobile, les
-            performances peuvent varier.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- COMPÉTENCES -->
-    <section id="skills" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Compétences</h2>
-        <p class="text-sm text-muted">
-          Les domaines sur lesquels je progresse en ce moment.
-        </p>
-      </header>
-
-      <div class="grid gap-5 sm:grid-cols-2">
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Intégration web (HTML / CSS)</span><span>Intermédiaire</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-3/4 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>JavaScript</span><span>En cours</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-1/3 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Design / UI</span><span>À l’aise</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-4/5 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Jeu vidéo (Godot)</span><span>Découverte</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-1/4 rounded-full bg-accent"></div>
+          <div class="mt-6 text-center">
+            <p class="text-[10px] uppercase tracking-widest text-muted">Basé à Ajaccio</p>
+            <p class="text-sm font-semibold">Università di Corsica</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- À PROPOS -->
-    <section id="about" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">À propos</h2>
-        <p class="text-sm text-muted">
-          Qui je suis et ce que je cherche à construire.
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <article class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <p class="text-sm text-muted leading-relaxed">
-            Je m’appelle <strong>Ismaël Saghir</strong>, étudiant en 1ʳᵉ année de BUT MMI en Corse.
-            Je m’intéresse à la manière dont un site peut rester simple tout en racontant une
-            histoire claire, grâce à la typographie, aux espaces et aux images.
-          </p>
-          <p class="text-sm text-muted leading-relaxed">
-            Ce portfolio rassemble une sélection de projets web, un mini‑jeu et des créations
-            graphiques réalisées pendant ma formation. L’objectif est de montrer une base solide
-            en intégration et une curiosité pour l’interactivité.
-          </p>
-        </article>
-
-        <aside class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
-          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-            Repères rapides
-          </h3>
-          <ul class="space-y-1 text-sm text-muted">
-            <li>• BUT MMI — Università di Corsica</li>
-            <li>• Basé entre Corte et Ajaccio</li>
-            <li>• Intérêt : web, UI, jeu vidéo, visuels</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Contact</h2>
-        <p class="text-sm text-muted">
-          Pour un stage, une question ou un retour sur les projets.
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <form
-            class="space-y-4 text-sm"
-            action="mailto:ismael.sag@icloud.com"
-            method="POST"
-            enctype="text/plain">
-            <div class="space-y-1">
-              <label for="name">Nom / Prénom</label>
-              <input id="name" name="Nom" type="text" required
-                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
-            </div>
-            <div class="space-y-1">
-              <label for="email">Adresse e‑mail</label>
-              <input id="email" name="Email" type="email" required
-                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
-            </div>
-            <div class="space-y-1">
-              <label for="message">Message</label>
-              <textarea id="message" name="Message" rows="4" required
-                        class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent"></textarea>
-            </div>
-            <button type="submit"
-                    class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/30 hover:bg-brown transition-colors">
-              Envoyer
-            </button>
-          </form>
-
-          <div class="space-y-1 text-sm text-muted">
-            <p>• Mail : <a href="mailto:ismael.sag@icloud.com" class="hover:text-accent">ismael.sag@icloud.com</a></p>
-            <p>• GitHub : <a href="https://github.com/Isma2a" target="_blank" rel="noopener" class="hover:text-accent">Isma2a</a></p>
-            <p>• LinkedIn : en mise à jour</p>
-          </div>
-        </div>
-
-        <div class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
-          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-            Localisation
-          </h3>
-          <p class="text-sm text-muted">
-            Basé en Corse, entre Ajaccio et Corte. La carte indique une position approximative à Ajaccio.
-          </p>
-          <div class="overflow-hidden rounded-2xl border border-brown/30">
-            <iframe
-              src="https://www.google.com/maps?q=5+Avenue+Mar%C3%A9chal+Lyautey+Ajaccio+Corse&output=embed"
-              height="220"
-              style="border:0; width:100%;"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="5 Avenue Maréchal Lyautey, Ajaccio"
-            ></iframe>
-          </div>
+    <section id="projects" class="space-y-12">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
+        <h2 class="text-3xl font-bold">Sélection de <span class="text-brown">travaux</span></h2>
+        <div id="filters" class="flex flex-wrap gap-2">
+            <button data-filter="all" class="filter-btn active text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-brown/20 bg-accent text-white">Tout</button>
+            <button data-filter="web" class="filter-btn text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-brown/20 hover:bg-brown/10">Web</button>
+            <button data-filter="game" class="filter-btn text-[10px] font-bold uppercase tracking-widest px-4 py-2 rounded-full border border-brown/20 hover:bg-brown/10">Jeu</button>
         </div>
       </div>
+      <div id="projects-grid" class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        </div>
     </section>
+
   </main>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-brown/20 py-6">
-    <p class="text-center text-xs text-muted">
-      © <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.
-    </p>
+  <footer class="border-t border-brown/10 py-12 text-center text-[10px] font-medium uppercase tracking-[0.3em] text-muted">
+    © <span id="year"></span> — Ismaël Saghir
   </footer>
 
-  <!-- JS : nav + filtres projets + bouton jeu -->
   <script>
-    // année
-    document.getElementById('year').textContent = new Date().getFullYear();
+    // Theme Management
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
 
-    // menu mobile
-    const navToggle = document.getElementById('nav-toggle');
-    const navMobile = document.getElementById('nav-mobile');
-    if (navToggle && navMobile) {
-      navToggle.addEventListener('click', () => {
-        navMobile.classList.toggle('hidden');
-
-      
-      });
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        sunIcon.classList.remove('hidden');
+        moonIcon.classList.add('hidden');
     }
 
-    // scroll doux
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const id = link.getAttribute('href');
-        const target = document.querySelector(id);
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth' });
-          if (navMobile && !navMobile.classList.contains('hidden')) {
-            navMobile.classList.add('hidden');
-          }
-        }
-      });
+    themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.theme = isDark ? 'dark' : 'light';
+        sunIcon.classList.toggle('hidden', !isDark);
+        moonIcon.classList.toggle('hidden', isDark);
     });
 
-    // données projets
+    // Data & Render
     const projects = [
-      {
-        title: "Mini chat médical",
-        type: "web",
-        image: "img/Chat_mediacal_srcs.png",
-        description: "Mini chat médical avec mots‑clés et réponses automatiques.",
-        tags: ["HTML", "CSS", "JavaScript"],
-        url: "src/Chat-HitBox/index.php"
-      },
-      {
-        title: "Page web gaming",
-        type: "web",
-        image: "img/Site_gaming_srcs.png",
-        description: "Page d’accueil inspirée des interfaces de plateforme de jeu.",
-        tags: ["Maquette", "HTML", "CSS"],
-        url: "src/gaming-site/index.html"
-      },
-      {
-        title: "Yuushin — site habillé",
-        type: "web",
-        image: "img/Yushin_srcs.png",
-        description: "Site vitrine pour une marque fictive de vêtements.",
-        tags: ["UI design", "Figma", "HTML/CSS"],
-        url: "src/Yuushin site/index.html"
-      },
-      {
-        title: "Meteor Escape (mini‑jeu)",
-        type: "game",
-        image: "Game/index.png",
-        description: "Prototype de niveau Godot où il faut esquiver des météorites.",
-        tags: ["Godot", "Web export"],
-        url: "Game/index.html"
-      },
-      {
-        title: "Pizza — Illustrator",
-        type: "visual",
-        image: "img/Pizza_adobe.png",
-        description: "Illustration vectorielle réalisée sur Adobe Illustrator.",
-        tags: ["Illustration", "Adobe"],
-        url: null
-      },
-      {
-        title: "Moodboard CGW",
-        type: "visual",
-        image: "img/moodboard_CGW.png",
-        description: "Moodboard pour la Corsica Games Week.",
-        tags: ["Moodboard", "Direction artistique"],
-        url: null
-      }
+      { title: "Mini chat médical", type: "web", image: "img/Chat_mediacal_srcs.png", tags: ["JS", "PHP"], url: "#" },
+      { title: "Meteor Escape", type: "game", image: "Game/index.png", tags: ["Godot", "Web"], url: "#" },
+      { title: "Yuushin Brand", type: "web", image: "img/Yushin_srcs.png", tags: ["Figma", "UI"], url: "#" }
     ];
 
-    const grid = document.getElementById('projects-grid');
-    const filterBtns = document.querySelectorAll('.filter-btn');
-
-    function renderProjects(filter) {
-      if (!grid) return;
-      grid.innerHTML = "";
-      const filtered = filter === "all"
-        ? projects
-        : projects.filter(p => p.type === filter);
-
-      filtered.forEach(p => {
-        const card = document.createElement('article');
-        card.className =
-          "group flex flex-col gap-3 rounded-2xl bg-white shadow-md shadow-brown/15 overflow-hidden";
-
-        card.innerHTML = `
-          <div class="overflow-hidden bg-baseSoft">
-            <img src="${p.image}" alt="${p.title}"
-                 class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+    function render() {
+      const grid = document.getElementById('projects-grid');
+      grid.innerHTML = projects.map(p => `
+        <article class="group rounded-[2rem] bg-white dark:bg-darkCard p-3 shadow-xl shadow-brown/5 border border-brown/5 transition-all duration-500 hover:-translate-y-2">
+          <div class="relative overflow-hidden rounded-[1.5rem] aspect-video">
+            <img src="${p.image}" class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110">
+            <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 dark:bg-darkCard/90 backdrop-blur-md rounded-full text-[9px] font-bold uppercase tracking-tighter">${p.type}</div>
           </div>
-          <div class="flex flex-1 flex-col gap-2 px-4 pb-4 pt-3">
-            <h3 class="text-sm font-semibold text-accent">
-              ${p.url
-                ? `<a href="${p.url}" target="_blank" rel="noopener" class="hover:text-brown transition-colors">${p.title}</a>`
-                : p.title}
-            </h3>
-            <p class="text-xs text-muted leading-relaxed">${p.description}</p>
-            <ul class="mt-1 flex flex-wrap gap-2 text-[11px] text-accent">
-              ${p.tags.map(t => `<li class="rounded-full bg-baseSoft px-2 py-0.5">${t}</li>`).join("")}
-            </ul>
+          <div class="p-5 space-y-3">
+            <h3 class="font-bold text-lg">${p.title}</h3>
+            <div class="flex gap-2">
+              ${p.tags.map(t => `<span class="text-[9px] border border-brown/20 px-2 py-1 rounded-lg">${t}</span>`).join('')}
+            </div>
           </div>
-        `;
-        grid.appendChild(card);
-      });
+        </article>
+      `).join('');
     }
 
-    // init
-    renderProjects("all");
-
-    // filtres
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-        renderProjects(filter);
-
-        filterBtns.forEach(b => {
-          b.classList.remove("bg-accent", "text-base", "shadow-accent/30");
-          b.classList.add("bg-base", "text-muted");
-        });
-
-        btn.classList.add("bg-accent", "text-base", "shadow-accent/30");
-        btn.classList.remove("bg-base", "text-muted");
-      });
-    });
-
-    // bouton jeu en fenêtre
-    const gameBtn = document.getElementById('game-window-btn');
-    if (gameBtn) {
-      gameBtn.addEventListener('click', () => {
-        window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080');
-      });
-    }
+    document.getElementById('year').textContent = new Date().getFullYear();
+    render();
   </script>
 </body>
 </html>
