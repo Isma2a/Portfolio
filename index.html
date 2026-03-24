@@ -3,590 +3,375 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- SEO -->
   <meta name="description"
-        content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI en Corse : projets web, mini-jeu Godot, créations graphiques et univers nature / néon.">
+        content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI : projets web, mini-jeu, créations visuelles.">
+  <title>Ismaël Saghir — Portfolio</title>
 
-  <title>Ismaël Saghir - Portfolio MMI</title>
-
-  <link rel="stylesheet" href="style.css">
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            base: "#f8f4ef",      // fond principal (blanc cassé)
+            baseSoft: "#e4d8cc",  // beige clair
+            brown: "#7f604c",     // brun principal
+            brownSoft: "#c0a894", // brun clair
+            ink: "#1f2933",       // texte gris/noir
+            muted: "#6b7280",     // texte secondaire
+            accent: "#3a2a23"     // brun très foncé (accents / hover)
+          }
+        }
+      }
+    }
+  </script>
 </head>
 
-<body>
-  <!-- ===== HEADER / BARRE DE NAVIGATION ===== -->
-  <header class="site-header">
-    <div class="logo">IS</div>
+<body class="min-h-screen bg-base text-ink antialiased">
+  <!-- HEADER -->
+  <header class="sticky top-0 z-30 border-b border-brown/20 bg-base/90 backdrop-blur">
+    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
+      <a href="#top" class="inline-flex items-center gap-3">
+        <span class="flex h-9 w-9 items-center justify-center rounded-full border border-brown bg-baseSoft text-xs font-semibold tracking-[0.14em] uppercase text-accent shadow-sm">
+          IS
+        </span>
+        <span class="hidden text-xs text-muted sm:inline">
+          Portfolio • BUT MMI
+        </span>
+      </a>
 
-    <nav class="main-nav">
-      <a href="#hero">Accueil</a>
-      <a href="#about">À propos</a>
-      <a href="#skills">Compétences</a>
-      <a href="#projects">Projets web</a>
-      <a href="#game">Mini-jeu</a>
-      <a href="#gallery">Créations</a>
-      <a href="#contact">Contact</a>
-    </nav>
+      <nav class="hidden gap-6 text-xs uppercase tracking-[0.16em] text-muted md:flex">
+        <a href="#intro" class="hover:text-accent transition-colors">Intro</a>
+        <a href="#projects" class="hover:text-accent transition-colors">Projets</a>
+        <a href="#skills" class="hover:text-accent transition-colors">Compétences</a>
+        <a href="#about" class="hover:text-accent transition-colors">À propos</a>
+        <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+      </nav>
 
-    <button class="nav-toggle" aria-label="Ouvrir le menu de navigation">
-      <span></span><span></span><span></span>
+     <button
+      id="nav-toggle"
+     class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm md:hidden overflow-hidden"
+      aria-label="Ouvrir le menu">
+      <div class="relative flex h-4 w-4 flex-col items-center justify-center">
+      <span id="line-1" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[-5px]"></span>
+      <span id="line-2" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute"></span>
+      <span id="line-3" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[5px]"></span>
+      </div>
     </button>
+
+    <!-- NAV MOBILE -->
+    <nav id="nav-mobile" class="hidden border-t border-brown/20 bg-baseSoft md:hidden">
+      <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 text-xs uppercase tracking-[0.16em] text-muted">
+        <a href="#intro">Intro</a>
+        <a href="#projects">Projets</a>
+        <a href="#skills">Compétences</a>
+        <a href="#about">À propos</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
   </header>
 
-  <!-- CONTENU PRINCIPAL POUR L’ACCESSIBILITÉ -->
-  <main>
+  <!-- MAIN -->
+  <main id="top" class="mx-auto max-w-5xl px-4 pb-16 pt-10 space-y-24">
 
-    <!-- ===== SECTION HERO (INTRO) ===== -->
-    <section id="hero" class="hero section">
-      <div class="hero-content">
-        <p class="hero-tag">Portfolio étudiant BUT MMI</p>
+    <!-- INTRO -->
+    <section id="intro" class="grid items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+      <div class="space-y-6">
+        <p class="text-xs uppercase tracking-[0.22em] text-muted">
+          Ismaël Saghir — BUT MMI
+        </p>
 
-        <h1 class="hero-title">
-          Ismaël <span>Saghir</span>
+        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-accent">
+          Portfolio <span class="text-brown">Ismaël Saghir</span>
         </h1>
 
-        <p class="hero-subtitle">
-          Étudiant de 18 ans en BUT MMI à l’Università di Corsica, entre Corte et Ajaccio.
-          J’aime mélanger nature, univers de jeu vidéo et lumière néon pour donner vie
-          à des sites, des prototypes et des petites expériences interactives.
+        <p class="max-w-xl text-sm text-muted leading-relaxed">
+          Étudiant en Métiers du Multimédia et de l’Internet, je conçois des interfaces sobres,
+          des petites expériences interactives et des visuels inspirés par l’urbain, les matières
+          naturelles et la lumière.
         </p>
 
-        <div class="hero-actions">
-          <a href="#projects" class="btn primary">Voir mes projets</a>
-          <a href="#about" class="btn ghost">En savoir plus</a>
+        <div class="flex flex-wrap gap-3">
+          <a href="#projects"
+             class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/20 hover:bg-brown transition-colors">
+            Voir les projets
+          </a>
+          <a href="#about"
+             class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-accent hover:bg-baseSoft hover:border-brown transition-colors">
+            À propos de moi
+          </a>
         </div>
 
-        <p class="hero-note">
-          Ce portfolio est pensé comme une balade nocturne dans une forêt numérique,
-          avec des cartes de projets à explorer.
+        <p class="text-xs text-muted max-w-md">
+          Un site one‑page pensé comme un carnet de projets : peu de couleurs, des blancs généreux
+          et des cartes mises en valeur par des ombres discrètes.
         </p>
       </div>
 
-      <div class="hero-visual">
-        <div class="hero-orbit" aria-hidden="true">
-          <div class="hero-orbit-circle"></div>
-          <div class="hero-orbit-dot"></div>
-        </div>
-
-        <div class="hero-card">
-          <p class="hero-card-label">Univers</p>
-          <p class="hero-card-title">Nature • Néon • Jeu vidéo</p>
-          <p>Un mélange de verdure, de nuit et de glow léger pour raconter mes projets.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== BANDEAU PHOTOS NATURE ===== -->
-    <section class="section nature-strip" aria-labelledby="nature-title">
-      <div class="section-header">
-        <h2 id="nature-title">Ambiance nature</h2>
-        <p>Un aperçu des paysages et textures qui inspirent mon univers.</p>
-      </div>
-
-      <div class="parallelogram-row">
-        <div class="parallelogram-card">
-          <div class="parallelogram-inner">
-            <img src="img/Photo_montagne.jpg"
-                 alt="Photo de montagne en Corse"
-                 width="310"
-                 height="233"
-                 loading="lazy">
+      <!-- bloc visuel + pseudo 3D -->
+      <div class="relative">
+        <div class="relative mx-auto flex h-72 w-full max-w-xs items-end justify-center rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-4">
+          <!-- ombre du “socle” -->
+          <div class="absolute inset-x-6 bottom-3 h-5 rounded-full bg-brown/10 blur-sm"></div>
+          <div class="relative h-40 w-40 -translate-y-2">
+            <!-- forme principale (style sculpture / glace 3D) -->
+            <div class="absolute inset-0 rounded-[40%] bg-gradient-to-tr from-brownSoft via-white to-base shadow-lg shadow-brown/25 transform hover:-translate-y-1 hover:rotate-1 transition-transform duration-500 origin-bottom">
+            </div>
+            <!-- reflet -->
+            <div class="absolute inset-3 rounded-[40%] bg-white/40 mix-blend-screen blur-md"></div>
           </div>
-        </div>
 
-        <div class="parallelogram-card">
-          <div class="parallelogram-inner">
-            <img src="img/photo_mers.jpeg"
-                 alt="Photo de la mer"
-                 width="358"
-                 height="202"
-                 loading="lazy">
-          </div>
-        </div>
-
-        <div class="parallelogram-card">
-          <div class="parallelogram-inner">
-            <img src="img/paysage_grotte.jpg"
-                 alt="Photo de paysage de grotte"
-                 width="310"
-                 height="387"
-                 loading="lazy">
+          <div class="relative mt-4 space-y-1 text-xs">
+            <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
+            <p class="text-ink text-sm font-medium">
+              Corte • Ajaccio — Corse
+            </p>
+            <p class="text-[11px] text-muted">
+              Web, UI, visuels, mini‑jeu Godot.
+            </p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION À PROPOS ===== -->
-    <section id="about" class="section section-alt">
-      <div class="section-header">
-        <h2>À propos</h2>
-        <p>Qui je suis, ce que j’apprends et ce que j’ai envie de créer.</p>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-text card">
-          <h3>Bio</h3>
-          <p>
-            Je m’appelle <strong>Ismaël Saghir</strong>, j’ai 18 ans et je suis étudiant en 1ʳᵉ année de
-            BUT Métiers du Multimédia et de l’Internet à l’Università di Corsica. Je passe une partie
-            de mon temps entre Corte et Ajaccio, où j’apprends à construire des projets numériques
-            qui mélangent web, design et audiovisuel.
-          </p>
-          <p>
-            Ce qui me plaît le plus, c’est partir d’une idée ou d’une image dans ma tête et la
-            transformer en quelque chose de concret : un site web, un prototype de jeu, une affiche
-            ou une interface. J’ai déjà réalisé des prototypes de sites, un mini-jeu sur Godot où il
-            faut esquiver des météorites, et je pratique régulièrement le dessin, Photoshop,
-            Illustrator et un peu de 3D sur Blender.
-          </p>
-          <p>
-            Mon univers mélange la nature, les ambiances sombres et quelques touches de néon pour
-            créer de la lumière et de la profondeur. J’ai envie de continuer à progresser en
-            développement front-end, en design d’interface et en création interactive, pour rapprocher
-            encore plus le jeu vidéo, le dessin et le web dans mes futurs projets.
+    <!-- PROJETS AVEC ONGLET / TRI -->
+    <section id="projects" class="space-y-8">
+      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Projets</h2>
+          <p class="text-sm text-muted">
+            Sélection de travaux web, jeu et visuels réalisés en BUT MMI.
           </p>
         </div>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
+          Filtrer par type
+        </p>
+      </header>
 
-        <div class="about-highlights card">
-          <h3>Ce que j’explore</h3>
+      <!-- Onglets / filtres -->
+      <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.16em]">
+        <button data-filter="all"
+                class="filter-btn rounded-full bg-accent px-4 py-1.5 text-base text-baseSoft shadow-sm shadow-accent/30">
+          Tout
+        </button>
+        <button data-filter="web"
+                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
+          Web
+        </button>
+        <button data-filter="game"
+                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
+          Jeu
+        </button>
+        <button data-filter="visual"
+                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
+          Visuels
+        </button>
+      </div>
 
-          <ul class="tags-list">
-            <li>HTML • CSS • JavaScript</li>
-            <li>Design d’interface</li>
-            <li>Prototypes de jeux</li>
-            <li>Dessin & illustration</li>
-            <li>Photoshop & Illustrator</li>
-            <li>Premiers pas en 3D (Blender)</li>
+      <!-- Grille projets -->
+      <div id="projects-grid" class="grid gap-6 md:grid-cols-3">
+        <!-- cartes générées en JS -->
+      </div>
+    </section>
+
+    <!-- MINI-JEU -->
+    <section id="game" class="space-y-8">
+      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Mini‑jeu : Meteor Escape</h2>
+          <p class="text-sm text-muted">
+            Prototype réalisé sur Godot et exporté pour le web.
+          </p>
+        </div>
+        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
+          Jeu • Godot • Web
+        </p>
+      </header>
+
+      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <div class="space-y-3 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
+          <h3 class="text-sm font-semibold text-accent">Concept</h3>
+          <p class="text-sm text-muted leading-relaxed">
+            Meteor Escape est un mini‑jeu où le joueur doit esquiver des météorites dans un décor
+            simple et lisible. L’objectif : travailler le rythme, les feedbacks visuels et la
+            gestion des collisions.
+          </p>
+          <p class="text-sm text-muted leading-relaxed">
+            Cette version web est un prototype de niveau, jouable directement dans le navigateur
+            ou dans une fenêtre dédiée.
+          </p>
+          <ul class="mt-2 flex flex-wrap gap-2 text-[11px] text-accent">
+            <li class="rounded-full bg-baseSoft px-2 py-0.5">Godot</li>
+            <li class="rounded-full bg-baseSoft px-2 py-0.5">Export Web</li>
+            <li class="rounded-full bg-baseSoft px-2 py-0.5">Prototype</li>
           </ul>
-
-          <div class="about-location">
-            <span class="pill">Basé en Corse</span>
-            <span class="pill">Corte • Ajaccio</span>
-          </div>
-
-          <div class="about-nature-note">
-            <p>La nature corse, la nuit, les arbres et les reliefs m’inspirent dans mes couleurs et mes ambiances.</p>
-          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ===== SECTION COMPÉTENCES ===== -->
-    <section id="skills" class="section">
-      <div class="section-header">
-        <h2>Compétences</h2>
-        <p>Une vue rapide de mon niveau actuel sur les outils et langages que j’utilise.</p>
-      </div>
-
-      <div class="skills-grid">
-        <!-- cartes de compétences (inchangées) -->
-        <!-- VS Code -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/vscode.png" alt="Logo VS Code" class="skill-logo" width="40" height="40" loading="lazy">
-              <span class="skill-name">VS Code</span>
+        <div class="space-y-3">
+          <div class="overflow-hidden rounded-3xl border border-brown/40 bg-baseSoft shadow-md shadow-brown/20">
+            <div class="aspect-[4/3] bg-black">
+              <iframe
+                src="Game/index.html"
+                title="Meteor Escape — mini‑jeu Godot"
+                loading="lazy"
+                class="h-full w-full border-0"
+                allowfullscreen
+              ></iframe>
             </div>
-            <span class="skill-percent">60%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 60;"></div>
-          </div>
-        </div>
-
-        <!-- HTML5 -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/html_logo.png" alt="Logo HTML5" class="skill-logo" width="24" height="40" loading="lazy">
-              <span class="skill-name">HTML5</span>
-            </div>
-            <span class="skill-percent">67%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 67;"></div>
-          </div>
-        </div>
-
-        <!-- CSS3 -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/css.png" alt="Logo CSS3" class="skill-logo" width="28" height="40" loading="lazy">
-              <span class="skill-name">CSS3</span>
-            </div>
-            <span class="skill-percent">50%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 50;"></div>
-          </div>
-        </div>
-
-        <!-- JavaScript -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/javascript.png" alt="Logo JavaScript" class="skill-logo" width="40" height="37" loading="lazy">
-              <span class="skill-name">JavaScript</span>
-            </div>
-            <span class="skill-percent">25%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 25;"></div>
-          </div>
-        </div>
-
-        <!-- Figma -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/figma.png" alt="Logo Figma" class="skill-logo" width="23" height="40" loading="lazy">
-              <span class="skill-name">Figma</span>
-            </div>
-            <span class="skill-percent">45%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 45;"></div>
-          </div>
-        </div>
-
-        <!-- Canva -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/canva.png" alt="Logo Canva" class="skill-logo" width="35" height="40" loading="lazy">
-              <span class="skill-name">Canva</span>
-            </div>
-            <span class="skill-percent">85%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 85;"></div>
-          </div>
-        </div>
-
-        <!-- GitHub -->
-        <div class="skill-card">
-          <div class="skill-header">
-            <div class="skill-info">
-              <img src="img/github.png" alt="Logo GitHub" class="skill-logo" width="33" height="40" loading="lazy">
-              <span class="skill-name">GitHub</span>
-            </div>
-            <span class="skill-percent">30%</span>
-          </div>
-          <div class="skill-bar">
-            <div class="skill-fill" style="--value: 30;"></div>
-          </div>
-        </div>
-      </div>
-
-      <p class="skills-note">
-        Ces pourcentages représentent où j’en suis aujourd’hui. L’objectif est qu’ils bougent vers le haut au fil de mes projets MMI.
-      </p>
-    </section>
-
-    <!-- ===== SECTION PROJETS WEB ===== -->
-    <section id="projects" class="section">
-      <div class="section-header">
-        <h2>Projets web</h2>
-        <p>Quelques projets réalisés ou en cours pendant ma formation MMI.</p>
-      </div>
-
-      <div class="projects-grid">
-        <!-- Carte 1 -->
-        <article class="card project-card">
-          <div class="project-image-wrapper">
-            <img src="img/Chat_mediacal_srcs.png"
-                 alt="Mini chat médical"
-                 class="project-image"
-                 width="330"
-                 height="158"
-                 loading="lazy">
-          </div>
-          <h3>
-            <a href="src/Chat-HitBox/index.php" target="_blank" rel="noopener">
-              Mini chat médical
-            </a>
-          </h3>
-          <p>
-            Mini chat médical contenant des mots-clés et des réponses automatiques simples.
-          </p>
-          <ul class="project-tags">
-            <li>HTML</li>
-            <li>CSS</li>
-            <li>JavaScript</li>
-          </ul>
-        </article>
-
-        <!-- Carte 2 -->
-        <article class="card project-card">
-          <div class="project-image-wrapper">
-            <img src="img/Site_gaming_srcs.png"
-                 alt="Site web gaming"
-                 class="project-image"
-                 width="384"
-                 height="158"
-                 loading="lazy">
-          </div>
-          <h3>
-            <a href="src/gaming-site/index.html" target="_blank" rel="noopener">
-              Site web gaming
-            </a>
-          </h3>
-          <p>
-            Une page dédiée au gaming, avec une mise en page simple et épurée.
-          </p>
-          <ul class="project-tags">
-            <li>Maquettage</li>
-            <li>HTML</li>
-            <li>CSS</li>
-          </ul>
-        </article>
-
-        <!-- Carte 3 -->
-        <article class="card project-card">
-          <div class="project-image-wrapper">
-            <img src="img/Yushin_srcs.png"
-                 alt="Yuushin - Prototype site web habillé"
-                 class="project-image"
-                 width="330"
-                 height="158"
-                 loading="lazy">
-          </div>
-          <h3>
-            <!-- On garde le chemin avec l’espace car tu ne peux pas le changer -->
-            <a href="src/Yuushin site/index.html" target="_blank" rel="noopener">
-              Yuushin - Prototype site web habillé
-            </a>
-          </h3>
-          <p>
-            Prototype d’un site web habillé pour une marque fictive de vêtements.
-          </p>
-          <ul class="project-tags">
-            <li>UI design</li>
-            <li>Figma</li>
-            <li>HTML • CSS</li>
-          </ul>
-        </article>
-      </div>
-
-      <p class="projects-note">
-        Les liens pourront pointer vers des dossiers de projets plus complets à mesure que je les finalise.
-      </p>
-    </section>
-
-    <!-- ===== SECTION MINI-JEU GODOT ===== -->
-    <section id="game" class="section section-alt">
-      <div class="section-header">
-        <h2>Mini-jeu : Meteor Escape</h2>
-        <p>Un premier pas dans la création de jeu vidéo avec Godot.</p>
-      </div>
-
-      <div class="game-layout">
-        <div class="card">
-          <h3>Concept</h3>
-          <p>
-            Meteor Escape est un mini-jeu réalisé sur Godot : un prototype d’un niveau où le joueur
-            doit esquiver des météorites. C’est un terrain de jeu pour expérimenter le game design,
-            le rythme et les retours visuels.
-          </p>
-          <p>
-            Tu peux y jouer directement depuis ce portfolio, en petite fenêtre ou dans une fenêtre
-            dédiée de 1200×1080.
-          </p>
-        </div>
-
-        <div class="card game-card">
-          <p class="game-label">Version web</p>
-          <h3>Meteor Escape (prototype)</h3>
-
-          <div class="game-frame-wrapper">
-            <iframe
-              id="meteor-game"
-              src="Game/index.html"
-              title="Mini-jeu Meteor Escape"
-              loading="lazy"
-              allowfullscreen
-            ></iframe>
           </div>
 
-          <button class="btn primary game-fullscreen-btn" type="button">
-            Fenêtre 1200×1080
+          <button
+            id="game-window-btn"
+            type="button"
+            class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-accent shadow-sm shadow-brown/20 hover:bg-baseSoft hover:border-brown transition-colors">
+            Ouvrir en fenêtre 1200×1080
           </button>
 
-          <p class="game-note">
-            Utilise les touches du jeu comme dans la version Godot. Sur mobile, les performances peuvent varier.
+          <p class="text-xs text-muted">
+            Astuce : pour un meilleur confort, joue en plein écran sur ordinateur. Sur mobile, les
+            performances peuvent varier.
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ===== SECTION CRÉATIONS ===== -->
-    <section id="gallery" class="section">
-      <div class="section-header">
-        <h2>Créations</h2>
-        <p>Quelques visuels et essais graphiques qui reflètent mon univers.</p>
-      </div>
+    <!-- COMPÉTENCES -->
+    <section id="skills" class="space-y-8">
+      <header class="space-y-2">
+        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Compétences</h2>
+        <p class="text-sm text-muted">
+          Les domaines sur lesquels je progresse en ce moment.
+        </p>
+      </header>
 
-      <div class="gallery-grid">
-        <figure class="gallery-item card">
-          <div class="gallery-image-wrapper">
-            <img src="img/Pizza_adobe.png"
-                 alt="Illustration de pizza réalisée sur Adobe Illustrator"
-                 class="gallery-image"
-                 width="204"
-                 height="290"
-                 loading="lazy">
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
+          <div class="mb-2 flex items-center justify-between text-xs text-muted">
+            <span>Intégration web (HTML / CSS)</span><span>Intermédiaire</span>
           </div>
-          <figcaption class="gallery-caption">
-            Création Pizza réalisée sur Adobe Illustrator.
-          </figcaption>
-        </figure>
+          <div class="h-1.5 rounded-full bg-white/70">
+            <div class="h-full w-3/4 rounded-full bg-accent"></div>
+          </div>
+        </div>
 
-        <figure class="gallery-item card">
-          <div class="gallery-image-wrapper">
-            <img src="img/moodboard_CGW.png"
-                 alt="Moodboard Corsica Games Week"
-                 class="gallery-image"
-                 width="254"
-                 height="204"
-                 loading="lazy">
+        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
+          <div class="mb-2 flex items-center justify-between text-xs text-muted">
+            <span>JavaScript</span><span>En cours</span>
           </div>
-          <figcaption class="gallery-caption">
-            Moodboard pour la Corsica Games Week.
-          </figcaption>
-        </figure>
+          <div class="h-1.5 rounded-full bg-white/70">
+            <div class="h-full w-1/3 rounded-full bg-accent"></div>
+          </div>
+        </div>
 
-        <figure class="gallery-item card">
-          <div class="gallery-image-wrapper">
-            <img src="img/Parfum-Affiche.jpg"
-                 alt="Affiche de parfum fictif"
-                 class="gallery-image"
-                 width="204"
-                 height="288"
-                 loading="lazy">
+        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
+          <div class="mb-2 flex items-center justify-between text-xs text-muted">
+            <span>Design / UI</span><span>À l’aise</span>
           </div>
-          <figcaption class="gallery-caption">
-            Affiche de parfum fictif mêlant nature et design minimaliste.
-          </figcaption>
-        </figure>
-      </div>
+          <div class="h-1.5 rounded-full bg-white/70">
+            <div class="h-full w-4/5 rounded-full bg-accent"></div>
+          </div>
+        </div>
 
-      <div class="gallery-grid">
-        <figure class="gallery-item card">
-          <div class="gallery-image-wrapper">
-            <img src="img/Affiche_Draculas.png"
-                 alt="Affiche pour le spectacle Draculas"
-                 class="gallery-image"
-                 width="204"
-                 height="289"
-                 loading="lazy">
+        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
+          <div class="mb-2 flex items-center justify-between text-xs text-muted">
+            <span>Jeu vidéo (Godot)</span><span>Découverte</span>
           </div>
-          <figcaption class="gallery-caption">
-            Affiche Draculas.
-          </figcaption>
-        </figure>
+          <div class="h-1.5 rounded-full bg-white/70">
+            <div class="h-full w-1/4 rounded-full bg-accent"></div>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- ===== SECTION CONTACT ===== -->
-    <section id="contact" class="section section-alt">
-      <div class="section-header">
-        <h2>Contact</h2>
-        <p>Envie de discuter d’un projet, d’un stage ou d’une idée ?</p>
-      </div>
+    <!-- À PROPOS -->
+    <section id="about" class="space-y-8">
+      <header class="space-y-2">
+        <h2 class="text-xl sm:text-2xl font-semibold text-accent">À propos</h2>
+        <p class="text-sm text-muted">
+          Qui je suis et ce que je cherche à construire.
+        </p>
+      </header>
 
-      <div class="contact-grid">
-        <!-- Bloc formulaire -->
-        <div class="card">
-          <h3>Me contacter</h3>
-          <p>
-            Tu peux m’envoyer un message directement depuis ce formulaire.
+      <div class="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
+        <article class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
+          <p class="text-sm text-muted leading-relaxed">
+            Je m’appelle <strong>Ismaël Saghir</strong>, étudiant en 1ʳᵉ année de BUT MMI en Corse.
+            Je m’intéresse à la manière dont un site peut rester simple tout en racontant une
+            histoire claire, grâce à la typographie, aux espaces et aux images.
           </p>
+          <p class="text-sm text-muted leading-relaxed">
+            Ce portfolio rassemble une sélection de projets web, un mini‑jeu et des créations
+            graphiques réalisées pendant ma formation. L’objectif est de montrer une base solide
+            en intégration et une curiosité pour l’interactivité.
+          </p>
+        </article>
 
+        <aside class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
+          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            Repères rapides
+          </h3>
+          <ul class="space-y-1 text-sm text-muted">
+            <li>• BUT MMI — Università di Corsica</li>
+            <li>• Basé entre Corte et Ajaccio</li>
+            <li>• Intérêt : web, UI, jeu vidéo, visuels</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="space-y-8">
+      <header class="space-y-2">
+        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Contact</h2>
+        <p class="text-sm text-muted">
+          Pour un stage, une question ou un retour sur les projets.
+        </p>
+      </header>
+
+      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
+        <div class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
           <form
-            class="contact-form"
+            class="space-y-4 text-sm"
             action="mailto:ismael.sag@icloud.com"
             method="POST"
-            enctype="text/plain"
-          >
-            <div class="form-row">
-              <label for="contact-name">Nom / Prénom</label>
-              <input
-                type="text"
-                id="contact-name"
-                name="Nom"
-                placeholder="Ton nom"
-                required
-              >
+            enctype="text/plain">
+            <div class="space-y-1">
+              <label for="name">Nom / Prénom</label>
+              <input id="name" name="Nom" type="text" required
+                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
             </div>
-
-            <div class="form-row">
-              <label for="contact-email">Adresse e‑mail</label>
-              <input
-                type="email"
-                id="contact-email"
-                name="Email"
-                placeholder="ton.adresse@email.com"
-                required
-              >
+            <div class="space-y-1">
+              <label for="email">Adresse e‑mail</label>
+              <input id="email" name="Email" type="email" required
+                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
             </div>
-
-            <div class="form-row">
-              <label for="contact-subject">Sujet</label>
-              <input
-                type="text"
-                id="contact-subject"
-                name="Sujet"
-                placeholder="Objet du message"
-                required
-              >
+            <div class="space-y-1">
+              <label for="message">Message</label>
+              <textarea id="message" name="Message" rows="4" required
+                        class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent"></textarea>
             </div>
-
-            <div class="form-row">
-              <label for="contact-message">Message</label>
-              <textarea
-                id="contact-message"
-                name="Message"
-                rows="4"
-                placeholder="Ton message..."
-                required
-              ></textarea>
-            </div>
-
-            <button type="submit" class="btn primary">
-              Envoyer le message
+            <button type="submit"
+                    class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/30 hover:bg-brown transition-colors">
+              Envoyer
             </button>
           </form>
 
-          <ul class="contact-list">
-            <li>
-              <span>•</span>
-              <a href="mailto:ismael.sag@icloud.com">ismael.sag@icloud.com</a>
-            </li>
-            <li>
-              <span>•</span>
-              <a href="https://github.com/Isma2a" target="_blank" rel="noopener">
-                GitHub : Isma2a
-              </a>
-            </li>
-            <li>
-              <span>•</span>
-              <a href="#" target="_blank" rel="noopener">
-                LinkedIn : bientôt à jour
-              </a>
-            </li>
-          </ul>
+          <div class="space-y-1 text-sm text-muted">
+            <p>• Mail : <a href="mailto:ismael.sag@icloud.com" class="hover:text-accent">ismael.sag@icloud.com</a></p>
+            <p>• GitHub : <a href="https://github.com/Isma2a" target="_blank" rel="noopener" class="hover:text-accent">Isma2a</a></p>
+            <p>• LinkedIn : en mise à jour</p>
+          </div>
         </div>
 
-        <!-- Bloc carte -->
-        <div class="card contact-hint">
-          <h3>Où je me trouve ?</h3>
-          <p>
-            Basé en Corse, entre Ajaccio et Corte. La carte ci‑dessous montre une localisation
-            approximative à Ajaccio.
+        <div class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
+          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
+            Localisation
+          </h3>
+          <p class="text-sm text-muted">
+            Basé en Corse, entre Ajaccio et Corte. La carte indique une position approximative à Ajaccio.
           </p>
-
-          <div class="contact-map-wrapper">
+          <div class="overflow-hidden rounded-2xl border border-brown/30">
             <iframe
               src="https://www.google.com/maps?q=5+Avenue+Mar%C3%A9chal+Lyautey+Ajaccio+Corse&output=embed"
               height="220"
@@ -600,14 +385,160 @@
         </div>
       </div>
     </section>
-
   </main>
 
-  <!-- ===== PIED DE PAGE ===== -->
-  <footer class="site-footer">
-    <p>© <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.</p>
+  <!-- FOOTER -->
+  <footer class="border-t border-brown/20 py-6">
+    <p class="text-center text-xs text-muted">
+      © <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.
+    </p>
   </footer>
 
-  <script src="script.js"></script>
+  <!-- JS : nav + filtres projets + bouton jeu -->
+  <script>
+    // année
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // menu mobile
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
+    if (navToggle && navMobile) {
+      navToggle.addEventListener('click', () => {
+        navMobile.classList.toggle('hidden');
+
+      
+      });
+    }
+
+    // scroll doux
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        const id = link.getAttribute('href');
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          if (navMobile && !navMobile.classList.contains('hidden')) {
+            navMobile.classList.add('hidden');
+          }
+        }
+      });
+    });
+
+    // données projets
+    const projects = [
+      {
+        title: "Mini chat médical",
+        type: "web",
+        image: "img/Chat_mediacal_srcs.png",
+        description: "Mini chat médical avec mots‑clés et réponses automatiques.",
+        tags: ["HTML", "CSS", "JavaScript"],
+        url: "src/Chat-HitBox/index.php"
+      },
+      {
+        title: "Page web gaming",
+        type: "web",
+        image: "img/Site_gaming_srcs.png",
+        description: "Page d’accueil inspirée des interfaces de plateforme de jeu.",
+        tags: ["Maquette", "HTML", "CSS"],
+        url: "src/gaming-site/index.html"
+      },
+      {
+        title: "Yuushin — site habillé",
+        type: "web",
+        image: "img/Yushin_srcs.png",
+        description: "Site vitrine pour une marque fictive de vêtements.",
+        tags: ["UI design", "Figma", "HTML/CSS"],
+        url: "src/Yuushin site/index.html"
+      },
+      {
+        title: "Meteor Escape (mini‑jeu)",
+        type: "game",
+        image: "Game/index.png",
+        description: "Prototype de niveau Godot où il faut esquiver des météorites.",
+        tags: ["Godot", "Web export"],
+        url: "Game/index.html"
+      },
+      {
+        title: "Pizza — Illustrator",
+        type: "visual",
+        image: "img/Pizza_adobe.png",
+        description: "Illustration vectorielle réalisée sur Adobe Illustrator.",
+        tags: ["Illustration", "Adobe"],
+        url: null
+      },
+      {
+        title: "Moodboard CGW",
+        type: "visual",
+        image: "img/moodboard_CGW.png",
+        description: "Moodboard pour la Corsica Games Week.",
+        tags: ["Moodboard", "Direction artistique"],
+        url: null
+      }
+    ];
+
+    const grid = document.getElementById('projects-grid');
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    function renderProjects(filter) {
+      if (!grid) return;
+      grid.innerHTML = "";
+      const filtered = filter === "all"
+        ? projects
+        : projects.filter(p => p.type === filter);
+
+      filtered.forEach(p => {
+        const card = document.createElement('article');
+        card.className =
+          "group flex flex-col gap-3 rounded-2xl bg-white shadow-md shadow-brown/15 overflow-hidden";
+
+        card.innerHTML = `
+          <div class="overflow-hidden bg-baseSoft">
+            <img src="${p.image}" alt="${p.title}"
+                 class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+          </div>
+          <div class="flex flex-1 flex-col gap-2 px-4 pb-4 pt-3">
+            <h3 class="text-sm font-semibold text-accent">
+              ${p.url
+                ? `<a href="${p.url}" target="_blank" rel="noopener" class="hover:text-brown transition-colors">${p.title}</a>`
+                : p.title}
+            </h3>
+            <p class="text-xs text-muted leading-relaxed">${p.description}</p>
+            <ul class="mt-1 flex flex-wrap gap-2 text-[11px] text-accent">
+              ${p.tags.map(t => `<li class="rounded-full bg-baseSoft px-2 py-0.5">${t}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // init
+    renderProjects("all");
+
+    // filtres
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter');
+        renderProjects(filter);
+
+        filterBtns.forEach(b => {
+          b.classList.remove("bg-accent", "text-base", "shadow-accent/30");
+          b.classList.add("bg-base", "text-muted");
+        });
+
+        btn.classList.add("bg-accent", "text-base", "shadow-accent/30");
+        btn.classList.remove("bg-base", "text-muted");
+      });
+    });
+
+    // bouton jeu en fenêtre
+    const gameBtn = document.getElementById('game-window-btn');
+    if (gameBtn) {
+      gameBtn.addEventListener('click', () => {
+        window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080');
+      });
+    }
+  </script>
 </body>
 </html>
