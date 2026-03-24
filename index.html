@@ -111,28 +111,29 @@
 
       <!-- bloc visuel + pseudo 3D -->
       <div class="relative">
-        <div class="relative mx-auto flex h-72 w-full max-w-xs items-end justify-center rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-4">
-          <!-- ombre du “socle” -->
-          <div class="absolute inset-x-6 bottom-3 h-5 rounded-full bg-brown/10 blur-sm"></div>
-          <div class="relative h-40 w-40 -translate-y-2">
-            <!-- forme principale (style sculpture / glace 3D) -->
-            <div class="absolute inset-0 rounded-[40%] bg-gradient-to-tr from-brownSoft via-white to-base shadow-lg shadow-brown/25 transform hover:-translate-y-1 hover:rotate-1 transition-transform duration-500 origin-bottom">
-            </div>
-            <!-- reflet -->
-            <div class="absolute inset-3 rounded-[40%] bg-white/40 mix-blend-screen blur-md"></div>
-          </div>
+  <div class="relative mx-auto flex h-72 w-full max-w-xs flex-col items-center justify-end rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-6">
+    
+    <div class="absolute inset-x-6 bottom-24 h-5 rounded-full bg-brown/10 blur-sm"></div>
 
-          <div class="relative mt-4 space-y-1 text-xs">
-            <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
-            <p class="text-ink text-sm font-medium">
-              Corte • Ajaccio — Corse
-            </p>
-            <p class="text-[11px] text-muted">
-              Web, UI, visuels, mini‑jeu Godot.
-            </p>
-          </div>
-        </div>
+    <div class="relative h-44 w-44 -translate-y-4">
+      <div class="absolute inset-0 overflow-hidden rounded-[40%] shadow-lg shadow-brown/25 transform hover:-translate-y-2 hover:rotate-2 transition-transform duration-500 origin-bottom border-2 border-white/50">
+        <img src="img/Corte-corse.jpg" alt="Ismaël Saghir" class="h-full w-full object-cover">
       </div>
+      
+      <div class="pointer-events-none absolute inset-0 rounded-[40%] bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
+    </div>
+
+    <div class="relative w-full space-y-1 text-center text-xs">
+      <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
+      <p class="text-ink text-sm font-medium">
+        Corte • Ajaccio — Corse
+      </p>
+      <p class="text-[11px] text-muted">
+        Web, UI, visuels, mini‑jeu Godot.
+      </p>
+    </div>
+  </div>
+</div>
     </section>
 
     <!-- PROJETS AVEC ONGLET / TRI -->
