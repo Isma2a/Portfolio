@@ -10,7 +10,9 @@
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
+    // Config unique (inclut déjà le dark mode)
     tailwind.config = {
+      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -20,7 +22,9 @@
             brownSoft: "#c0a894", // brun clair
             ink: "#1f2933",       // texte gris/noir
             muted: "#6b7280",     // texte secondaire
-            accent: "#3a2a23"     // brun très foncé (accents / hover)
+            accent: "#3a2a23",    // brun très foncé (accents / hover)
+            darkBase: "#12100e",  // fond sombre
+            darkCard: "#1c1816"   // cartes sombres
           }
         }
       }
@@ -48,17 +52,27 @@
         <a href="#about" class="hover:text-accent transition-colors">À propos</a>
         <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
       </nav>
+    
+      <button id="theme-toggle" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm transition-transform hover:scale-110">
+        <svg id="sun-icon" class="hidden h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
+        </svg>
+        <svg id="moon-icon" class="h-5 w-5 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+      </button>
 
-     <button
-      id="nav-toggle"
-     class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm md:hidden overflow-hidden"
-      aria-label="Ouvrir le menu">
-      <div class="relative flex h-4 w-4 flex-col items-center justify-center">
-      <span id="line-1" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[-5px]"></span>
-      <span id="line-2" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute"></span>
-      <span id="line-3" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[5px]"></span>
-      </div>
-    </button>
+      <button
+        id="nav-toggle"
+        class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm md:hidden overflow-hidden"
+        aria-label="Ouvrir le menu">
+        <div class="relative flex h-4 w-4 flex-col items-center justify-center">
+          <span id="line-1" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[-5px]"></span>
+          <span id="line-2" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute"></span>
+          <span id="line-3" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[5px]"></span>
+        </div>
+      </button>
+    </div>
 
     <!-- NAV MOBILE -->
     <nav id="nav-mobile" class="hidden border-t border-brown/20 bg-baseSoft md:hidden">
@@ -74,7 +88,6 @@
 
   <!-- MAIN -->
   <main id="top" class="mx-auto max-w-5xl px-4 pb-16 pt-10 space-y-24">
-
     <!-- INTRO -->
     <section id="intro" class="grid items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
       <div class="space-y-6">
@@ -111,29 +124,27 @@
 
       <!-- bloc visuel + pseudo 3D -->
       <div class="relative">
-  <div class="relative mx-auto flex h-72 w-full max-w-xs flex-col items-center justify-end rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-6">
-    
-    <div class="absolute inset-x-6 bottom-24 h-5 rounded-full bg-brown/10 blur-sm"></div>
+        <div class="relative mx-auto flex h-72 w-full max-w-xs flex-col items-center justify-end rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-6">
+          <div class="absolute inset-x-6 bottom-24 h-5 rounded-full bg-brown/10 blur-sm"></div>
 
-    <div class="relative h-44 w-44 -translate-y-4">
-      <div class="absolute inset-0 overflow-hidden rounded-[40%] shadow-lg shadow-brown/25 transform hover:-translate-y-2 hover:rotate-2 transition-transform duration-500 origin-bottom border-2 border-white/50">
-        <img src="img/Corte-corse.jpg" alt="Ismaël Saghir" class="h-full w-full object-cover">
+          <div class="relative h-44 w-44 -translate-y-4">
+            <div class="absolute inset-0 overflow-hidden rounded-[40%] shadow-lg shadow-brown/25 transform hover:-translate-y-2 hover:rotate-2 transition-transform duration-500 origin-bottom border-2 border-white/50">
+              <img src="img/Corte-corse.jpg" alt="Ismaël Saghir" class="h-full w-full object-cover">
+            </div>
+            <div class="pointer-events-none absolute inset-0 rounded-[40%] bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
+          </div>
+
+          <div class="relative w-full space-y-1 text-center text-xs">
+            <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
+            <p class="text-ink text-sm font-medium">
+              Corte • Ajaccio — Corse
+            </p>
+            <p class="text-[11px] text-muted">
+              Web, UI, visuels, mini‑jeu Godot.
+            </p>
+          </div>
+        </div>
       </div>
-      
-      <div class="pointer-events-none absolute inset-0 rounded-[40%] bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
-    </div>
-
-    <div class="relative w-full space-y-1 text-center text-xs">
-      <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
-      <p class="text-ink text-sm font-medium">
-        Corte • Ajaccio — Corse
-      </p>
-      <p class="text-[11px] text-muted">
-        Web, UI, visuels, mini‑jeu Godot.
-      </p>
-    </div>
-  </div>
-</div>
     </section>
 
     <!-- PROJETS AVEC ONGLET / TRI -->
@@ -397,21 +408,61 @@
 
   <!-- JS : nav + filtres projets + bouton jeu -->
   <script>
-    // année
+    // 1. GESTION DU DARK MODE
+    const themeToggle = document.getElementById('theme-toggle');
+    const sunIcon = document.getElementById('sun-icon');
+    const moonIcon = document.getElementById('moon-icon');
+
+    const updateIcons = (isDark) => {
+      sunIcon.classList.toggle('hidden', !isDark);
+      moonIcon.classList.toggle('hidden', isDark);
+    };
+
+    // Chargement initial
+    if (
+      localStorage.theme === 'dark' ||
+      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    ) {
+      document.documentElement.classList.add('dark');
+      updateIcons(true);
+    } else {
+      updateIcons(false);
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        const isDark = document.documentElement.classList.contains('dark');
+        localStorage.theme = isDark ? 'dark' : 'light';
+        updateIcons(isDark);
+      });
+    }
+
+    // 2. ANNÉE
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // menu mobile
+    // 3. MENU MOBILE
     const navToggle = document.getElementById('nav-toggle');
     const navMobile = document.getElementById('nav-mobile');
+    const line1 = document.getElementById('line-1');
+    const line2 = document.getElementById('line-2');
+    const line3 = document.getElementById('line-3');
+
     if (navToggle && navMobile) {
       navToggle.addEventListener('click', () => {
         navMobile.classList.toggle('hidden');
 
-      
+        if (line1 && line2 && line3) {
+          line1.classList.toggle('translate-y-[-5px]');
+          line1.classList.toggle('rotate-45');
+          line3.classList.toggle('translate-y-[5px]');
+          line3.classList.toggle('-rotate-45');
+          line2.classList.toggle('opacity-0');
+        }
       });
     }
 
-    // scroll doux
+    // 4. SCROLL DOUX
     document.querySelectorAll('a[href^="#"]').forEach(link => {
       link.addEventListener('click', e => {
         const id = link.getAttribute('href');
@@ -426,7 +477,7 @@
       });
     });
 
-    // données projets
+    // 5. DONNÉES PROJETS (UNE SEULE FOIS)
     const projects = [
       {
         title: "Mini chat médical",
@@ -481,9 +532,10 @@
     const grid = document.getElementById('projects-grid');
     const filterBtns = document.querySelectorAll('.filter-btn');
 
-    function renderProjects(filter) {
+    function renderProjects(filter = "all") {
       if (!grid) return;
       grid.innerHTML = "";
+
       const filtered = filter === "all"
         ? projects
         : projects.filter(p => p.type === filter);
@@ -491,22 +543,24 @@
       filtered.forEach(p => {
         const card = document.createElement('article');
         card.className =
-          "group flex flex-col gap-3 rounded-2xl bg-white shadow-md shadow-brown/15 overflow-hidden";
+          "group flex flex-col gap-3 rounded-2xl bg-white dark:bg-darkCard shadow-md shadow-brown/15 overflow-hidden";
 
         card.innerHTML = `
-          <div class="overflow-hidden bg-baseSoft">
+          <div class="overflow-hidden bg-baseSoft dark:bg-darkBase">
             <img src="${p.image}" alt="${p.title}"
                  class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105">
           </div>
           <div class="flex flex-1 flex-col gap-2 px-4 pb-4 pt-3">
-            <h3 class="text-sm font-semibold text-accent">
-              ${p.url
-                ? `<a href="${p.url}" target="_blank" rel="noopener" class="hover:text-brown transition-colors">${p.title}</a>`
-                : p.title}
+            <h3 class="text-sm font-semibold text-accent dark:text-base">
+              ${
+                p.url
+                  ? `<a href="${p.url}" target="_blank" rel="noopener" class="hover:text-brown transition-colors">${p.title}</a>`
+                  : p.title
+              }
             </h3>
-            <p class="text-xs text-muted leading-relaxed">${p.description}</p>
+            <p class="text-xs text-muted dark:text-base/80 leading-relaxed">${p.description}</p>
             <ul class="mt-1 flex flex-wrap gap-2 text-[11px] text-accent">
-              ${p.tags.map(t => `<li class="rounded-full bg-baseSoft px-2 py-0.5">${t}</li>`).join("")}
+              ${p.tags.map(t => `<li class="rounded-full bg-baseSoft dark:bg-darkBase px-2 py-0.5">${t}</li>`).join("")}
             </ul>
           </div>
         `;
@@ -517,7 +571,7 @@
     // init
     renderProjects("all");
 
-    // filtres
+    // 6. FILTRES
     filterBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const filter = btn.getAttribute('data-filter');
@@ -533,7 +587,7 @@
       });
     });
 
-    // bouton jeu en fenêtre
+    // 7. BOUTON JEU EN FENÊTRE
     const gameBtn = document.getElementById('game-window-btn');
     if (gameBtn) {
       gameBtn.addEventListener('click', () => {
