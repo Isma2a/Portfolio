@@ -3,12 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI : projets web, mini-jeu, créations visuelles.">
-  <title>Ismaël Saghir — Portfolio</title>
+  <meta name="description" content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI à Corte, Corse : projets web, mini-jeu Godot, créations visuelles et UI design.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#f5f0ea" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f0d0b" media="(prefers-color-scheme: dark)">
 
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ismaël Saghir — Portfolio BUT MMI">
+  <meta property="og:description" content="Projets web, mini-jeu et créations visuelles d'un étudiant BUT MMI en Corse.">
+  <meta property="og:url" content="https://isma2a.github.io/Portfolio/">
+  <meta property="og:locale" content="fr_FR">
+
+  <link rel="canonical" href="https://isma2a.github.io/Portfolio/">
+
+  <title>Ismaël Saghir — Portfolio BUT MMI</title>
+
+  <!-- Préconnexions polices -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <!-- Préchargement image hero -->
+  <link rel="preload" as="image" href="img/Corte-corse.jpg" fetchpriority="high">
 
   <style>
     /* ─── TOKENS ────────────────────────────────────────────────────── */
@@ -72,6 +89,7 @@
       opacity: 0.025;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
+      aria-hidden: true;
     }
 
     /* ─── TYPOGRAPHY ────────────────────────────────────────────────── */
@@ -139,6 +157,7 @@
       letter-spacing: 0.12em;
       color: var(--accent);
       transition: background var(--transition), border-color var(--transition), color var(--transition);
+      aria-hidden: true;
     }
 
     .logo-sub {
@@ -179,6 +198,14 @@
 
     nav.desktop-nav a:hover { color: var(--accent); }
     nav.desktop-nav a:hover::after { width: 100%; }
+
+    /* Focus visible pour accessibilité clavier */
+    a:focus-visible,
+    button:focus-visible {
+      outline: 2px solid var(--brown);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
 
     .header-actions {
       display: flex;
@@ -364,7 +391,7 @@
     }
 
     .photo-frame img {
-      width: 100%; height: 100%;
+      width: 168px; height: 168px;
       object-fit: cover;
     }
 
@@ -472,8 +499,6 @@
         box-shadow var(--transition),
         border-color var(--transition),
         background var(--transition);
-
-      /* Animation d'apparition */
       opacity: 0;
       animation: cardIn 0.45s forwards;
     }
@@ -491,6 +516,7 @@
 
     .card-img {
       height: 160px;
+      width: 100%;
       overflow: hidden;
       background: var(--bg-soft);
       position: relative;
@@ -498,7 +524,7 @@
 
     .card-img img {
       width: 100%;
-      height: 100%;
+      height: 160px;
       object-fit: cover;
       transition: transform 0.6s cubic-bezier(0.4,0,0.2,1), filter 0.4s;
       filter: brightness(0.97);
@@ -509,7 +535,6 @@
       filter: brightness(1.02);
     }
 
-    /* Badge type */
     .card-type-badge {
       position: absolute;
       top: 10px; right: 10px;
@@ -562,7 +587,6 @@
       margin-top: 4px;
     }
 
-    /* Flèche hover */
     .card-arrow {
       position: absolute;
       bottom: 16px; right: 16px;
@@ -574,6 +598,7 @@
       opacity: 0;
       transform: translate(4px, 4px);
       transition: opacity 0.25s, transform 0.25s;
+      aria-hidden: true;
     }
 
     .project-card:hover .card-arrow {
@@ -609,6 +634,7 @@
       margin-bottom: 10px;
     }
 
+    /* Lazy iframe container */
     .game-iframe-wrap {
       border-radius: 20px;
       overflow: hidden;
@@ -617,11 +643,47 @@
       background: #000;
       aspect-ratio: 4/3;
       transition: box-shadow var(--transition);
+      position: relative;
+    }
+
+    .game-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: var(--bg-soft);
+      cursor: pointer;
+      border: none;
+      width: 100%;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .game-placeholder svg {
+      color: var(--brown);
+    }
+
+    .game-placeholder span {
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     .game-iframe-wrap iframe {
       width: 100%; height: 100%;
       border: none;
+      display: none;
+    }
+
+    .game-iframe-wrap.loaded iframe {
+      display: block;
+    }
+
+    .game-iframe-wrap.loaded .game-placeholder {
+      display: none;
     }
 
     .game-hint {
@@ -753,6 +815,7 @@
       content: '—';
       color: var(--brown-light);
       font-size: 11px;
+      aria-hidden: true;
     }
 
     /* ─── CONTACT ───────────────────────────────────────────────────── */
@@ -829,6 +892,7 @@
       content: '→';
       color: var(--brown-light);
       font-size: 12px;
+      aria-hidden: true;
     }
 
     .contact-links a:hover { color: var(--accent); }
@@ -900,22 +964,41 @@
       margin: 14px 0 28px;
       border-radius: 99px;
     }
+
+    /* ─── SKIP LINK ─────────────────────────────────────────────────── */
+    .skip-link {
+      position: absolute;
+      top: -40px;
+      left: 0;
+      background: var(--accent);
+      color: var(--bg);
+      padding: 8px 16px;
+      border-radius: 0 0 8px 0;
+      font-size: 12px;
+      text-decoration: none;
+      z-index: 9999;
+      transition: top 0.2s;
+    }
+    .skip-link:focus { top: 0; }
   </style>
 </head>
 
 <body>
+
+  <!-- Skip nav pour accessibilité clavier -->
+  <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
   <!-- ─── HEADER ──────────────────────────────────────────────────── -->
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
 
-        <a href="#intro" class="logo">
-          <span class="logo-badge">IS</span>
+        <a href="#intro" class="logo" aria-label="Ismaël Saghir — Retour en haut">
+          <span class="logo-badge" aria-hidden="true">IS</span>
           <span class="logo-sub logo-text">Portfolio · BUT MMI</span>
         </a>
 
-        <nav class="desktop-nav">
+        <nav class="desktop-nav" aria-label="Navigation principale">
           <a href="#intro">Intro</a>
           <a href="#projects">Projets</a>
           <a href="#skills">Compétences</a>
@@ -924,19 +1007,17 @@
         </nav>
 
         <div class="header-actions">
-          <!-- Dark mode toggle -->
-          <button id="theme-toggle" class="icon-btn" aria-label="Changer de thème">
-            <svg id="sun-icon" style="display:none" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button id="theme-toggle" class="icon-btn" aria-label="Activer le mode sombre" type="button">
+            <svg id="sun-icon" style="display:none" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
             </svg>
-            <svg id="moon-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg id="moon-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
             </svg>
           </button>
 
-          <!-- Burger mobile -->
-          <button id="nav-toggle" class="icon-btn" style="display:none" aria-label="Menu">
-            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <button id="nav-toggle" class="icon-btn" style="display:none" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-mobile" type="button">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path id="burger-lines" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
             </svg>
           </button>
@@ -945,7 +1026,7 @@
       </div>
     </div>
 
-    <nav class="mobile-nav" id="nav-mobile">
+    <nav class="mobile-nav" id="nav-mobile" aria-label="Navigation mobile">
       <div class="mobile-nav-inner">
         <a href="#intro">Intro</a>
         <a href="#projects">Projets</a>
@@ -957,22 +1038,22 @@
   </header>
 
   <!-- ─── MAIN ─────────────────────────────────────────────────────── -->
-  <main>
+  <main id="main-content">
     <div class="container">
 
       <!-- INTRO -->
-      <section id="intro">
+      <section id="intro" aria-labelledby="intro-title">
         <div class="intro-grid">
 
           <div>
-            <p class="intro-eyebrow">Ismaël Saghir — BUT MMI</p>
+            <p class="intro-eyebrow" aria-hidden="true">Ismaël Saghir — BUT MMI</p>
 
-            <h1>
+            <h1 id="intro-title">
               Portfolio<br>
               <span style="color: var(--brown); font-style: italic;">Ismaël<br>Saghir</span>
             </h1>
 
-            <div class="divider"></div>
+            <div class="divider" aria-hidden="true"></div>
 
             <p style="max-width: 440px; font-size:14px;">
               Étudiant en Métiers du Multimédia et de l'Internet, je conçois des interfaces sobres,
@@ -994,7 +1075,13 @@
           <div>
             <div class="photo-card">
               <div class="photo-frame">
-                <img src="img/Corte-corse.jpg" alt="Photo — Corte, Corse">
+                <img
+                  src="img/Corte-corse.jpg"
+                  alt="Photo de Corte, Corse — paysage montagneux"
+                  width="168"
+                  height="168"
+                  fetchpriority="high"
+                  decoding="sync">
               </div>
               <div class="photo-info">
                 <p class="location-label">Basé en</p>
@@ -1008,31 +1095,31 @@
       </section>
 
       <!-- PROJETS -->
-      <section id="projects" class="reveal">
+      <section id="projects" class="reveal" aria-labelledby="projects-title">
         <div class="projects-header">
           <div>
-            <p class="section-label">Sélection</p>
-            <h2>Projets</h2>
+            <p class="section-label" aria-hidden="true">Sélection</p>
+            <h2 id="projects-title">Projets</h2>
             <p style="font-size:13px; margin-top:6px;">Travaux web, jeu et visuels réalisés en BUT MMI.</p>
           </div>
-          <p style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);">Filtrer par type</p>
+          <p style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);" aria-hidden="true">Filtrer par type</p>
         </div>
 
-        <div class="filter-row">
-          <button class="filter-btn active" data-filter="all">Tout</button>
-          <button class="filter-btn" data-filter="web">Web</button>
-          <button class="filter-btn" data-filter="game">Jeu</button>
-          <button class="filter-btn" data-filter="visual">Visuels</button>
+        <div class="filter-row" role="group" aria-label="Filtres de projets">
+          <button class="filter-btn active" data-filter="all" type="button" aria-pressed="true">Tout</button>
+          <button class="filter-btn" data-filter="web" type="button" aria-pressed="false">Web</button>
+          <button class="filter-btn" data-filter="game" type="button" aria-pressed="false">Jeu</button>
+          <button class="filter-btn" data-filter="visual" type="button" aria-pressed="false">Visuels</button>
         </div>
 
-        <div id="projects-grid"></div>
+        <div id="projects-grid" role="list" aria-live="polite" aria-label="Liste des projets"></div>
       </section>
 
       <!-- MINI-JEU -->
-      <section id="game" class="reveal">
-        <p class="section-label">Prototype interactif</p>
-        <h2>Mini‑jeu : Meteor Escape</h2>
-        <div class="divider"></div>
+      <section id="game" class="reveal" aria-labelledby="game-title">
+        <p class="section-label" aria-hidden="true">Prototype interactif</p>
+        <h2 id="game-title">Mini‑jeu : Meteor Escape</h2>
+        <div class="divider" aria-hidden="true"></div>
 
         <div class="game-grid">
           <div class="game-info-card">
@@ -1054,12 +1141,25 @@
           </div>
 
           <div>
-            <div class="game-iframe-wrap">
-              <iframe src="Game/index.html" title="Meteor Escape" loading="lazy" allowfullscreen></iframe>
+            <div class="game-iframe-wrap" id="game-wrap">
+              <!-- Placeholder cliquable — l'iframe ne se charge qu'au clic -->
+              <button class="game-placeholder" id="game-placeholder" aria-label="Lancer Meteor Escape" type="button">
+                <svg width="48" height="48" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <circle cx="12" cy="12" r="10" stroke-width="1.5"/>
+                  <path d="M10 8l6 4-6 4V8z" fill="currentColor" stroke="none"/>
+                </svg>
+                <span>Lancer le jeu</span>
+              </button>
+              <iframe
+                id="game-iframe"
+                title="Meteor Escape — mini-jeu Godot"
+                allowfullscreen
+                sandbox="allow-scripts allow-same-origin allow-pointer-lock"
+                loading="lazy"></iframe>
             </div>
 
             <div style="margin-top: 12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-              <button id="game-window-btn" class="btn-secondary" type="button">
+              <button id="game-window-btn" class="btn-secondary" type="button" aria-label="Ouvrir Meteor Escape dans une nouvelle fenêtre">
                 Ouvrir en fenêtre
               </button>
             </div>
@@ -1070,48 +1170,56 @@
       </section>
 
       <!-- COMPÉTENCES -->
-      <section id="skills" class="reveal">
-        <p class="section-label">Progression</p>
-        <h2>Compétences</h2>
-        <div class="divider"></div>
+      <section id="skills" class="reveal" aria-labelledby="skills-title">
+        <p class="section-label" aria-hidden="true">Progression</p>
+        <h2 id="skills-title">Compétences</h2>
+        <div class="divider" aria-hidden="true"></div>
 
         <div class="skills-grid" id="skills-grid">
           <div class="skill-item">
             <div class="skill-header">
-              <span class="skill-name">Intégration web (HTML / CSS)</span>
-              <span class="skill-level">Intermédiaire</span>
+              <span class="skill-name" id="skill1-label">Intégration web (HTML / CSS)</span>
+              <span class="skill-level" aria-hidden="true">Intermédiaire</span>
             </div>
-            <div class="skill-bar"><div class="skill-fill" style="--w:0.75"></div></div>
+            <div class="skill-bar" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" aria-labelledby="skill1-label">
+              <div class="skill-fill" data-w="0.75"></div>
+            </div>
           </div>
           <div class="skill-item">
             <div class="skill-header">
-              <span class="skill-name">JavaScript</span>
-              <span class="skill-level">En cours</span>
+              <span class="skill-name" id="skill2-label">JavaScript</span>
+              <span class="skill-level" aria-hidden="true">En cours</span>
             </div>
-            <div class="skill-bar"><div class="skill-fill" style="--w:0.33"></div></div>
+            <div class="skill-bar" role="progressbar" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" aria-labelledby="skill2-label">
+              <div class="skill-fill" data-w="0.33"></div>
+            </div>
           </div>
           <div class="skill-item">
             <div class="skill-header">
-              <span class="skill-name">Design / UI</span>
-              <span class="skill-level">À l'aise</span>
+              <span class="skill-name" id="skill3-label">Design / UI</span>
+              <span class="skill-level" aria-hidden="true">À l'aise</span>
             </div>
-            <div class="skill-bar"><div class="skill-fill" style="--w:0.80"></div></div>
+            <div class="skill-bar" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" aria-labelledby="skill3-label">
+              <div class="skill-fill" data-w="0.80"></div>
+            </div>
           </div>
           <div class="skill-item">
             <div class="skill-header">
-              <span class="skill-name">Jeu vidéo (Godot)</span>
-              <span class="skill-level">Découverte</span>
+              <span class="skill-name" id="skill4-label">Jeu vidéo (Godot)</span>
+              <span class="skill-level" aria-hidden="true">Découverte</span>
             </div>
-            <div class="skill-bar"><div class="skill-fill" style="--w:0.25"></div></div>
+            <div class="skill-bar" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" aria-labelledby="skill4-label">
+              <div class="skill-fill" data-w="0.25"></div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- À PROPOS -->
-      <section id="about" class="reveal">
-        <p class="section-label">Qui je suis</p>
-        <h2>À propos</h2>
-        <div class="divider"></div>
+      <section id="about" class="reveal" aria-labelledby="about-title">
+        <p class="section-label" aria-hidden="true">Qui je suis</p>
+        <h2 id="about-title">À propos</h2>
+        <div class="divider" aria-hidden="true"></div>
 
         <div class="about-grid">
           <div class="about-card">
@@ -1127,7 +1235,7 @@
             </p>
           </div>
 
-          <aside class="about-aside">
+          <aside class="about-aside" aria-label="Informations rapides">
             <h3>Repères rapides</h3>
             <ul>
               <li>BUT MMI — Università di Corsica</li>
@@ -1139,32 +1247,60 @@
       </section>
 
       <!-- CONTACT -->
-      <section id="contact" class="reveal">
-        <p class="section-label">Échangeons</p>
-        <h2>Contact</h2>
-        <div class="divider"></div>
+      <section id="contact" class="reveal" aria-labelledby="contact-title">
+        <p class="section-label" aria-hidden="true">Échangeons</p>
+        <h2 id="contact-title">Contact</h2>
+        <div class="divider" aria-hidden="true"></div>
 
         <div class="contact-grid">
           <div class="contact-card">
-            <form action="mailto:ismael.sag@icloud.com" method="POST" enctype="text/plain">
+            <!-- Formulaire via Formspree (HTTPS) — évite le mixed content mailto -->
+            <form
+              id="contact-form"
+              action="https://formspree.io/f/xdkewrgv"
+              method="POST"
+              novalidate
+              aria-label="Formulaire de contact">
+
               <div class="form-group">
                 <label for="name">Nom / Prénom</label>
-                <input id="name" name="Nom" type="text" required placeholder="Jean Dupont">
+                <input
+                  id="name"
+                  name="Nom"
+                  type="text"
+                  required
+                  placeholder="Jean Dupont"
+                  autocomplete="name"
+                  aria-required="true">
               </div>
               <div class="form-group">
                 <label for="email">Adresse e‑mail</label>
-                <input id="email" name="Email" type="email" required placeholder="jean@exemple.com">
+                <input
+                  id="email"
+                  name="Email"
+                  type="email"
+                  required
+                  placeholder="jean@exemple.com"
+                  autocomplete="email"
+                  aria-required="true">
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea id="message" name="Message" rows="4" required placeholder="Bonjour Ismaël…"></textarea>
+                <textarea
+                  id="message"
+                  name="Message"
+                  rows="4"
+                  required
+                  placeholder="Bonjour Ismaël…"
+                  aria-required="true"></textarea>
               </div>
               <button type="submit" class="btn-primary">Envoyer</button>
+              <p id="form-status" role="status" aria-live="polite" style="margin-top:10px;font-size:12px;color:var(--brown);"></p>
             </form>
 
             <div class="contact-links">
-              <a href="mailto:ismael.sag@icloud.com">ismael.sag@icloud.com</a>
-              <a href="https://github.com/Isma2a" target="_blank" rel="noopener">github.com/Isma2a</a>
+              <a href="mailto:ismael.sag@icloud.com" aria-label="Envoyer un e-mail à Ismaël">ismael.sag@icloud.com</a>
+              <a href="https://github.com/Isma2a" target="_blank" rel="noopener noreferrer" aria-label="Profil GitHub d'Ismaël (nouvelle fenêtre)">github.com/Isma2a</a>
             </div>
           </div>
 
@@ -1173,11 +1309,13 @@
             <p>Basé en Corse, entre Ajaccio et Corte. Position approximative à Ajaccio.</p>
             <div class="map-wrap">
               <iframe
-                src="https://www.google.com/maps?q=5+Avenue+Mar%C3%A9chal+Lyautey+Ajaccio+Corse&output=embed"
+                src="https://www.google.com/maps?q=Ajaccio+Corse+France&output=embed"
+                width="100%"
                 height="200"
-                allowfullscreen loading="lazy"
+                loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
-                title="Ajaccio, Corse"></iframe>
+                title="Carte — Ajaccio, Corse"
+                aria-label="Carte de localisation à Ajaccio, Corse"></iframe>
             </div>
           </div>
         </div>
@@ -1197,33 +1335,30 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 
     /* ── Dark mode ──────────────────────────────────────────────────── */
-    const html       = document.documentElement;
-    const sunIcon    = document.getElementById('sun-icon');
-    const moonIcon   = document.getElementById('moon-icon');
-    const themeBtn   = document.getElementById('theme-toggle');
+    const html      = document.documentElement;
+    const sunIcon   = document.getElementById('sun-icon');
+    const moonIcon  = document.getElementById('moon-icon');
+    const themeBtn  = document.getElementById('theme-toggle');
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
 
     function applyTheme(dark) {
       html.classList.toggle('dark', dark);
       sunIcon.style.display  = dark ? 'block' : 'none';
       moonIcon.style.display = dark ? 'none'  : 'block';
+      themeBtn.setAttribute('aria-label', dark ? 'Activer le mode clair' : 'Activer le mode sombre');
       localStorage.theme = dark ? 'dark' : 'light';
     }
 
-    // Init
-    const prefersDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const storedTheme  = localStorage.theme;
-    const initDark     = storedTheme === 'dark' || (!storedTheme && prefersDark);
-    applyTheme(initDark);
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const storedTheme = localStorage.theme;
+    applyTheme(storedTheme === 'dark' || (!storedTheme && prefersDark));
 
-    themeBtn.addEventListener('click', () => {
-      applyTheme(!html.classList.contains('dark'));
-    });
+    themeBtn.addEventListener('click', () => applyTheme(!html.classList.contains('dark')));
 
     /* ── Mobile nav ─────────────────────────────────────────────────── */
     const navToggle = document.getElementById('nav-toggle');
     const navMobile = document.getElementById('nav-mobile');
 
-    // Affiche le burger seulement sous 768px
     function updateBurgerVisibility() {
       navToggle.style.display = window.innerWidth < 768 ? 'flex' : 'none';
     }
@@ -1231,12 +1366,17 @@
     window.addEventListener('resize', updateBurgerVisibility);
 
     navToggle.addEventListener('click', () => {
-      navMobile.classList.toggle('open');
+      const isOpen = navMobile.classList.toggle('open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+      navToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
     });
 
-    // Ferme le mobile nav sur clic lien
     navMobile.querySelectorAll('a').forEach(a => {
-      a.addEventListener('click', () => navMobile.classList.remove('open'));
+      a.addEventListener('click', () => {
+        navMobile.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.setAttribute('aria-label', 'Ouvrir le menu');
+      });
     });
 
     /* ── Smooth scroll ──────────────────────────────────────────────── */
@@ -1304,7 +1444,7 @@
 
     const typeLabels = { web: "Web", game: "Jeu", visual: "Visuel" };
 
-    function renderProjects(filter = "all") {
+    function renderProjects(filter) {
       const grid     = document.getElementById('projects-grid');
       const filtered = filter === "all" ? projects : projects.filter(p => p.type === filter);
       grid.innerHTML = "";
@@ -1313,25 +1453,26 @@
         const card = document.createElement('article');
         card.className = 'project-card';
         card.style.animationDelay = `${i * 60}ms`;
+        card.setAttribute('role', 'listitem');
 
         const titleEl = p.url
-          ? `<a class="card-title" href="${p.url}" target="_blank" rel="noopener">${p.title}</a>`
+          ? `<a class="card-title" href="${p.url}" target="_blank" rel="noopener noreferrer" aria-label="${p.title} — ouvrir le projet">${p.title}</a>`
           : `<span class="card-title" style="cursor:default">${p.title}</span>`;
 
         card.innerHTML = `
           <div class="card-img">
-            <img src="${p.image}" alt="${p.title}" loading="lazy">
-            <span class="card-type-badge">${typeLabels[p.type] || p.type}</span>
+            <img src="${p.image}" alt="${p.title} — aperçu du projet" width="320" height="160" loading="lazy" decoding="async">
+            <span class="card-type-badge" aria-hidden="true">${typeLabels[p.type] || p.type}</span>
           </div>
           <div class="card-body">
             ${titleEl}
             <p class="card-desc">${p.description}</p>
-            <div class="card-tags">
+            <div class="card-tags" aria-label="Technologies utilisées">
               ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
             </div>
           </div>
-          ${p.url ? `<div class="card-arrow">
-            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          ${p.url ? `<div class="card-arrow" aria-hidden="true">
+            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M7 7h10v10"/>
             </svg>
           </div>` : ''}
@@ -1345,15 +1486,31 @@
     /* ── Filtres projets ────────────────────────────────────────────── */
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.filter-btn').forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         renderProjects(btn.dataset.filter);
       });
     });
 
-    /* ── Bouton jeu ─────────────────────────────────────────────────── */
+    /* ── Chargement du jeu au clic (pas d'iframe bloquant au load) ── */
+    const gamePlaceholder = document.getElementById('game-placeholder');
+    const gameIframe      = document.getElementById('game-iframe');
+    const gameWrap        = document.getElementById('game-wrap');
+
+    function loadGame() {
+      gameIframe.src = 'Game/index.html';
+      gameWrap.classList.add('loaded');
+    }
+
+    gamePlaceholder.addEventListener('click', loadGame);
+
+    /* ── Bouton ouvrir en fenêtre ───────────────────────────────────── */
     document.getElementById('game-window-btn').addEventListener('click', () => {
-      window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080');
+      window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080,noopener,noreferrer');
     });
 
     /* ── Scroll reveal ──────────────────────────────────────────────── */
@@ -1364,12 +1521,11 @@
     document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
     /* ── Skill bars ─────────────────────────────────────────────────── */
-    // Anime les barres quand la section entre dans le viewport
     const skillObserver = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
           e.target.querySelectorAll('.skill-fill').forEach(fill => {
-            const w = parseFloat(fill.style.getPropertyValue('--w') || 0);
+            const w = parseFloat(fill.dataset.w || 0);
             fill.style.transform = `scaleX(${w})`;
           });
         }
@@ -1378,6 +1534,30 @@
 
     const skillsSection = document.getElementById('skills');
     if (skillsSection) skillObserver.observe(skillsSection);
+
+    /* ── Formspree AJAX ─────────────────────────────────────────────── */
+    const contactForm   = document.getElementById('contact-form');
+    const formStatus    = document.getElementById('form-status');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      formStatus.textContent = 'Envoi en cours…';
+      try {
+        const res  = await fetch(contactForm.action, {
+          method:  'POST',
+          body:    new FormData(contactForm),
+          headers: { Accept: 'application/json' }
+        });
+        if (res.ok) {
+          formStatus.textContent = 'Message envoyé, merci !';
+          contactForm.reset();
+        } else {
+          formStatus.textContent = 'Une erreur est survenue. Réessaie plus tard.';
+        }
+      } catch {
+        formStatus.textContent = 'Impossible d\'envoyer. Vérifie ta connexion.';
+      }
+    });
   </script>
 
 </body>
