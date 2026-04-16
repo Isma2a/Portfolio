@@ -1,82 +1,952 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description"
-        content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI : projets web, mini-jeu, créations visuelles.">
+  <meta name="description" content="Portfolio d'Ismaël Saghir, étudiant en BUT MMI : projets web, mini-jeu, créations visuelles.">
   <title>Ismaël Saghir — Portfolio</title>
 
-  <!-- Tailwind CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    // Config unique (inclut déjà le dark mode)
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            base: "#f8f4ef",      // fond principal (blanc cassé)
-            baseSoft: "#e4d8cc",  // beige clair
-            brown: "#7f604c",     // brun principal
-            brownSoft: "#c0a894", // brun clair
-            ink: "#1f2933",       // texte gris/noir
-            muted: "#6b7280",     // texte secondaire
-            accent: "#3a2a23",    // brun très foncé (accents / hover)
-            darkBase: "#12100e",  // fond sombre
-            darkCard: "#1c1816"   // cartes sombres
-          }
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── TOKENS ────────────────────────────────────────────────────── */
+    :root {
+      --bg:          #f5f0ea;
+      --bg-soft:     #ede5da;
+      --bg-card:     #faf7f3;
+      --border:      rgba(127,96,76,0.18);
+      --border-mid:  rgba(127,96,76,0.35);
+      --brown:       #7f604c;
+      --brown-light: #b89a85;
+      --accent:      #3a2a23;
+      --ink:         #1f2933;
+      --muted:       #7a6e68;
+      --tag-bg:      #e8ddd4;
+      --shadow-sm:   0 2px 8px rgba(58,42,35,0.07);
+      --shadow-md:   0 6px 24px rgba(58,42,35,0.10);
+      --shadow-lg:   0 16px 48px rgba(58,42,35,0.13);
+      --transition:  0.28s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    html.dark {
+      --bg:          #0f0d0b;
+      --bg-soft:     #1a1713;
+      --bg-card:     #1e1b17;
+      --border:      rgba(180,150,120,0.12);
+      --border-mid:  rgba(180,150,120,0.25);
+      --brown:       #b89a85;
+      --brown-light: #8a6e5a;
+      --accent:      #e8d8cc;
+      --ink:         #ede5da;
+      --muted:       #9a8e87;
+      --tag-bg:      #2a2420;
+      --shadow-sm:   0 2px 8px rgba(0,0,0,0.25);
+      --shadow-md:   0 6px 24px rgba(0,0,0,0.35);
+      --shadow-lg:   0 16px 48px rgba(0,0,0,0.5);
+    }
+
+    /* ─── RESET & BASE ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { font-size: 16px; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      transition: background var(--transition), color var(--transition);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ─── GRAIN OVERLAY ─────────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 200px 200px;
+    }
+
+    /* ─── TYPOGRAPHY ────────────────────────────────────────────────── */
+    h1, h2, h3 {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: var(--accent);
+    }
+    h1 { font-size: clamp(2.2rem, 6vw, 3.8rem); line-height: 1.08; }
+    h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+    h3 { font-size: 1rem; }
+    p  { line-height: 1.7; color: var(--muted); }
+
+    /* ─── LAYOUT ────────────────────────────────────────────────────── */
+    .container {
+      max-width: 1020px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    main {
+      position: relative;
+      z-index: 1;
+      padding-bottom: 80px;
+    }
+
+    section {
+      padding-top: 96px;
+    }
+
+    /* ─── HEADER ────────────────────────────────────────────────────── */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      transition: background var(--transition);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-badge {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-mid);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      transition: background var(--transition), border-color var(--transition), color var(--transition);
+    }
+
+    .logo-sub {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color var(--transition);
+    }
+
+    nav.desktop-nav {
+      display: none;
+      gap: 28px;
+    }
+
+    @media (min-width: 768px) {
+      nav.desktop-nav { display: flex; }
+    }
+
+    nav.desktop-nav a {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      position: relative;
+    }
+
+    nav.desktop-nav a::after {
+      content: '';
+      position: absolute;
+      bottom: -3px; left: 0;
+      width: 0; height: 1px;
+      background: var(--brown);
+      transition: width 0.25s;
+    }
+
+    nav.desktop-nav a:hover { color: var(--accent); }
+    nav.desktop-nav a:hover::after { width: 100%; }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .icon-btn {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-mid);
+      background: var(--bg-soft);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--accent);
+      transition: background var(--transition), border-color var(--transition), transform 0.2s;
+    }
+
+    .icon-btn:hover { transform: scale(1.08); background: var(--bg-card); }
+
+    /* ─── MOBILE NAV ────────────────────────────────────────────────── */
+    nav.mobile-nav {
+      display: none;
+      border-top: 1px solid var(--border);
+      background: var(--bg-soft);
+      transition: background var(--transition);
+    }
+
+    nav.mobile-nav.open { display: block; }
+
+    .mobile-nav-inner {
+      padding: 16px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    nav.mobile-nav a {
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    /* ─── BUTTONS ───────────────────────────────────────────────────── */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 99px;
+      background: var(--accent);
+      color: var(--bg);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 16px rgba(58,42,35,0.18);
+    }
+
+    .btn-primary:hover {
+      background: var(--brown);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(58,42,35,0.22);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: 99px;
+      background: transparent;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 1px solid var(--border-mid);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--bg-soft);
+      border-color: var(--brown);
+      transform: translateY(-1px);
+    }
+
+    /* ─── TAGS ──────────────────────────────────────────────────────── */
+    .tag {
+      display: inline-flex;
+      padding: 3px 10px;
+      border-radius: 99px;
+      background: var(--tag-bg);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    /* ─── SECTION LABEL ─────────────────────────────────────────────── */
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 12px;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ─── INTRO ─────────────────────────────────────────────────────── */
+    #intro .intro-grid {
+      display: grid;
+      gap: 48px;
+      align-items: center;
+      padding-top: 64px;
+    }
+
+    @media (min-width: 768px) {
+      #intro .intro-grid { grid-template-columns: 1.4fr 1fr; }
+    }
+
+    .intro-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--brown);
+      margin-bottom: 16px;
+    }
+
+    .intro-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .intro-note {
+      margin-top: 20px;
+      font-size: 12px;
+      color: var(--muted);
+      max-width: 380px;
+      line-height: 1.7;
+      border-left: 2px solid var(--border-mid);
+      padding-left: 14px;
+      font-style: italic;
+    }
+
+    /* ─── PHOTO CARD ────────────────────────────────────────────────── */
+    .photo-card {
+      position: relative;
+      border-radius: 28px;
+      border: 1px solid var(--border);
+      background: linear-gradient(160deg, var(--bg-soft), var(--bg));
+      box-shadow: var(--shadow-lg);
+      padding: 24px 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: background var(--transition), box-shadow var(--transition);
+      max-width: 300px;
+      margin: 0 auto;
+    }
+
+    .photo-frame {
+      width: 168px; height: 168px;
+      border-radius: 40%;
+      overflow: hidden;
+      border: 2px solid var(--border-mid);
+      box-shadow: var(--shadow-md);
+      transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .photo-card:hover .photo-frame {
+      transform: translateY(-6px) rotate(1.5deg);
+    }
+
+    .photo-frame img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-info {
+      margin-top: 16px;
+      text-align: center;
+    }
+
+    .photo-info .location-label {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .photo-info .location-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin: 4px 0;
+      transition: color var(--transition);
+    }
+
+    .photo-info .location-sub {
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ─── PROJECTS ──────────────────────────────────────────────────── */
+    .projects-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    @media (min-width: 768px) {
+      .projects-header {
+        flex-direction: row;
+        align-items: flex-end;
+        justify-content: space-between;
       }
     }
-  </script>
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 36px;
+    }
+
+    .filter-btn {
+      padding: 7px 18px;
+      border-radius: 99px;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid var(--border-mid);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .filter-btn:hover {
+      border-color: var(--brown);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-color: var(--accent);
+    }
+
+    /* ─── PROJECTS GRID ─────────────────────────────────────────────── */
+    #projects-grid {
+      display: grid;
+      gap: 20px;
+    }
+
+    @media (min-width: 600px) {
+      #projects-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 900px) {
+      #projects-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    /* ─── PROJECT CARD ──────────────────────────────────────────────── */
+    .project-card {
+      border-radius: 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      cursor: pointer;
+      transition:
+        transform var(--transition),
+        box-shadow var(--transition),
+        border-color var(--transition),
+        background var(--transition);
+
+      /* Animation d'apparition */
+      opacity: 0;
+      animation: cardIn 0.45s forwards;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px) scale(1.015);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--border-mid);
+    }
+
+    .card-img {
+      height: 160px;
+      overflow: hidden;
+      background: var(--bg-soft);
+      position: relative;
+    }
+
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.4,0,0.2,1), filter 0.4s;
+      filter: brightness(0.97);
+    }
+
+    .project-card:hover .card-img img {
+      transform: scale(1.07);
+      filter: brightness(1.02);
+    }
+
+    /* Badge type */
+    .card-type-badge {
+      position: absolute;
+      top: 10px; right: 10px;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      backdrop-filter: blur(8px);
+      background: rgba(245,240,234,0.85);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      transition: background var(--transition), color var(--transition);
+    }
+
+    html.dark .card-type-badge {
+      background: rgba(30,27,23,0.85);
+    }
+
+    .card-body {
+      padding: 18px 18px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex: 1;
+    }
+
+    .card-title {
+      font-family: 'Fraunces', serif;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+      line-height: 1.3;
+    }
+
+    .card-title:hover { color: var(--brown); }
+
+    .card-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .card-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+
+    /* Flèche hover */
+    .card-arrow {
+      position: absolute;
+      bottom: 16px; right: 16px;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--bg);
+      opacity: 0;
+      transform: translate(4px, 4px);
+      transition: opacity 0.25s, transform 0.25s;
+    }
+
+    .project-card:hover .card-arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    /* ─── MINI-JEU ──────────────────────────────────────────────────── */
+    .game-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .game-grid { grid-template-columns: 1.2fr 1fr; }
+    }
+
+    .game-info-card {
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    .game-info-card h3 {
+      margin-bottom: 12px;
+    }
+
+    .game-info-card p {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .game-iframe-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      background: #000;
+      aspect-ratio: 4/3;
+      transition: box-shadow var(--transition);
+    }
+
+    .game-iframe-wrap iframe {
+      width: 100%; height: 100%;
+      border: none;
+    }
+
+    .game-hint {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ─── SKILLS ────────────────────────────────────────────────────── */
+    .skills-grid {
+      display: grid;
+      gap: 14px;
+    }
+
+    @media (min-width: 600px) {
+      .skills-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .skill-item {
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition), transform 0.2s, box-shadow 0.2s;
+    }
+
+    .skill-item:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .skill-name {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .skill-level {
+      font-size: 10px;
+      color: var(--brown);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .skill-bar {
+      height: 4px;
+      border-radius: 99px;
+      background: var(--border);
+      overflow: hidden;
+    }
+
+    .skill-fill {
+      height: 100%;
+      border-radius: 99px;
+      background: linear-gradient(90deg, var(--brown-light), var(--brown));
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 1s cubic-bezier(0.34,1.1,0.64,1);
+    }
+
+    .skill-fill.animate { transform: scaleX(1); }
+
+    /* ─── ABOUT ─────────────────────────────────────────────────────── */
+    .about-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .about-grid { grid-template-columns: 1.5fr 1fr; }
+    }
+
+    .about-card {
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+
+    .about-card p {
+      font-size: 13px;
+      margin-bottom: 12px;
+    }
+
+    .about-card p:last-child { margin-bottom: 0; }
+
+    .about-aside {
+      border-radius: 24px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition);
+    }
+
+    .about-aside h3 {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    .about-aside ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .about-aside li {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .about-aside li::before {
+      content: '—';
+      color: var(--brown-light);
+      font-size: 11px;
+    }
+
+    /* ─── CONTACT ───────────────────────────────────────────────────── */
+    .contact-grid {
+      display: grid;
+      gap: 24px;
+    }
+
+    @media (min-width: 768px) {
+      .contact-grid { grid-template-columns: 1.2fr 1fr; }
+    }
+
+    .contact-card {
+      border-radius: 24px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+
+    .form-group label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--ink);
+      outline: none;
+      transition: border-color 0.2s, background var(--transition), color var(--transition);
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: var(--brown);
+      background: var(--bg-card);
+    }
+
+    .contact-links {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .contact-links a {
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .contact-links a::before {
+      content: '→';
+      color: var(--brown-light);
+      font-size: 12px;
+    }
+
+    .contact-links a:hover { color: var(--accent); }
+
+    .contact-aside {
+      border-radius: 24px;
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 24px 22px;
+      box-shadow: var(--shadow-sm);
+      transition: background var(--transition);
+    }
+
+    .contact-aside h3 {
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .contact-aside p {
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+
+    .map-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .map-wrap iframe {
+      display: block;
+      width: 100%;
+      border: none;
+    }
+
+    /* ─── FOOTER ────────────────────────────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      transition: border-color var(--transition);
+    }
+
+    footer p {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ─── SCROLL REVEAL ─────────────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ─── SECTION DIVIDER ───────────────────────────────────────────── */
+    .divider {
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(90deg, var(--brown), transparent);
+      margin: 14px 0 28px;
+      border-radius: 99px;
+    }
+  </style>
 </head>
 
-<body class="min-h-screen bg-base text-ink antialiased">
-  <!-- HEADER -->
-  <header class="sticky top-0 z-30 border-b border-brown/20 bg-base/90 backdrop-blur">
-    <div class="mx-auto flex h-16 max-w-5xl items-center justify-between px-4">
-      <a href="#top" class="inline-flex items-center gap-3">
-        <span class="flex h-9 w-9 items-center justify-center rounded-full border border-brown bg-baseSoft text-xs font-semibold tracking-[0.14em] uppercase text-accent shadow-sm">
-          IS
-        </span>
-        <span class="hidden text-xs text-muted sm:inline">
-          Portfolio • BUT MMI
-        </span>
-      </a>
+<body>
 
-      <nav class="hidden gap-6 text-xs uppercase tracking-[0.16em] text-muted md:flex">
-        <a href="#intro" class="hover:text-accent transition-colors">Intro</a>
-        <a href="#projects" class="hover:text-accent transition-colors">Projets</a>
-        <a href="#skills" class="hover:text-accent transition-colors">Compétences</a>
-        <a href="#about" class="hover:text-accent transition-colors">À propos</a>
-        <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
-      </nav>
-    
-      <button id="theme-toggle" class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm transition-transform hover:scale-110">
-        <svg id="sun-icon" class="hidden h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z" />
-        </svg>
-        <svg id="moon-icon" class="h-5 w-5 text-brown" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      </button>
+  <!-- ─── HEADER ──────────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="container">
+      <div class="header-inner">
 
-      <button
-        id="nav-toggle"
-        class="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-brown/40 bg-baseSoft text-accent shadow-sm md:hidden overflow-hidden"
-        aria-label="Ouvrir le menu">
-        <div class="relative flex h-4 w-4 flex-col items-center justify-center">
-          <span id="line-1" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[-5px]"></span>
-          <span id="line-2" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute"></span>
-          <span id="line-3" class="block h-[2px] w-4 bg-current transition-all duration-300 ease-in-out absolute translate-y-[5px]"></span>
+        <a href="#intro" class="logo">
+          <span class="logo-badge">IS</span>
+          <span class="logo-sub logo-text">Portfolio · BUT MMI</span>
+        </a>
+
+        <nav class="desktop-nav">
+          <a href="#intro">Intro</a>
+          <a href="#projects">Projets</a>
+          <a href="#skills">Compétences</a>
+          <a href="#about">À propos</a>
+          <a href="#contact">Contact</a>
+        </nav>
+
+        <div class="header-actions">
+          <!-- Dark mode toggle -->
+          <button id="theme-toggle" class="icon-btn" aria-label="Changer de thème">
+            <svg id="sun-icon" style="display:none" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707M12 8a4 4 0 100 8 4 4 0 000-8z"/>
+            </svg>
+            <svg id="moon-icon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+            </svg>
+          </button>
+
+          <!-- Burger mobile -->
+          <button id="nav-toggle" class="icon-btn" style="display:none" aria-label="Menu">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path id="burger-lines" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+            </svg>
+          </button>
         </div>
-      </button>
+
+      </div>
     </div>
 
-    <!-- NAV MOBILE -->
-    <nav id="nav-mobile" class="hidden border-t border-brown/20 bg-baseSoft md:hidden">
-      <div class="mx-auto flex max-w-5xl flex-col gap-3 px-4 py-3 text-xs uppercase tracking-[0.16em] text-muted">
+    <nav class="mobile-nav" id="nav-mobile">
+      <div class="mobile-nav-inner">
         <a href="#intro">Intro</a>
         <a href="#projects">Projets</a>
         <a href="#skills">Compétences</a>
@@ -86,398 +956,301 @@
     </nav>
   </header>
 
-  <!-- MAIN -->
-  <main id="top" class="mx-auto max-w-5xl px-4 pb-16 pt-10 space-y-24">
-    <!-- INTRO -->
-    <section id="intro" class="grid items-center gap-10 md:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
-      <div class="space-y-6">
-        <p class="text-xs uppercase tracking-[0.22em] text-muted">
-          Ismaël Saghir — BUT MMI
-        </p>
+  <!-- ─── MAIN ─────────────────────────────────────────────────────── -->
+  <main>
+    <div class="container">
 
-        <h1 class="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-accent">
-          Portfolio <span class="text-brown">Ismaël Saghir</span>
-        </h1>
+      <!-- INTRO -->
+      <section id="intro">
+        <div class="intro-grid">
 
-        <p class="max-w-xl text-sm text-muted leading-relaxed">
-          Étudiant en Métiers du Multimédia et de l’Internet, je conçois des interfaces sobres,
-          des petites expériences interactives et des visuels inspirés par l’urbain, les matières
-          naturelles et la lumière.
-        </p>
+          <div>
+            <p class="intro-eyebrow">Ismaël Saghir — BUT MMI</p>
 
-        <div class="flex flex-wrap gap-3">
-          <a href="#projects"
-             class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/20 hover:bg-brown transition-colors">
-            Voir les projets
-          </a>
-          <a href="#about"
-             class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-accent hover:bg-baseSoft hover:border-brown transition-colors">
-            À propos de moi
-          </a>
-        </div>
+            <h1>
+              Portfolio<br>
+              <span style="color: var(--brown); font-style: italic;">Ismaël<br>Saghir</span>
+            </h1>
 
-        <p class="text-xs text-muted max-w-md">
-          Un site one‑page pensé comme un carnet de projets : peu de couleurs, des blancs généreux
-          et des cartes mises en valeur par des ombres discrètes.
-        </p>
-      </div>
+            <div class="divider"></div>
 
-      <!-- bloc visuel + pseudo 3D -->
-      <div class="relative">
-        <div class="relative mx-auto flex h-72 w-full max-w-xs flex-col items-center justify-end rounded-3xl border border-brown/40 bg-gradient-to-b from-baseSoft to-base shadow-xl shadow-brown/15 p-6">
-          <div class="absolute inset-x-6 bottom-24 h-5 rounded-full bg-brown/10 blur-sm"></div>
+            <p style="max-width: 440px; font-size:14px;">
+              Étudiant en Métiers du Multimédia et de l'Internet, je conçois des interfaces sobres,
+              des expériences interactives et des visuels inspirés par l'urbain, les matières
+              naturelles et la lumière.
+            </p>
 
-          <div class="relative h-44 w-44 -translate-y-4">
-            <div class="absolute inset-0 overflow-hidden rounded-[40%] shadow-lg shadow-brown/25 transform hover:-translate-y-2 hover:rotate-2 transition-transform duration-500 origin-bottom border-2 border-white/50">
-              <img src="img/Corte-corse.jpg" alt="Ismaël Saghir" class="h-full w-full object-cover">
+            <div class="intro-actions">
+              <a href="#projects" class="btn-primary">Voir les projets</a>
+              <a href="#about" class="btn-secondary">À propos de moi</a>
             </div>
-            <div class="pointer-events-none absolute inset-0 rounded-[40%] bg-gradient-to-tr from-transparent via-white/20 to-white/40 mix-blend-overlay"></div>
-          </div>
 
-          <div class="relative w-full space-y-1 text-center text-xs">
-            <p class="text-muted uppercase tracking-[0.18em]">Basé en</p>
-            <p class="text-ink text-sm font-medium">
-              Corte • Ajaccio — Corse
-            </p>
-            <p class="text-[11px] text-muted">
-              Web, UI, visuels, mini‑jeu Godot.
+            <p class="intro-note">
+              Un site one‑page conçu comme un carnet de projets : peu de couleurs, des blancs généreux,
+              des cartes mises en valeur par des ombres discrètes.
             </p>
           </div>
+
+          <div>
+            <div class="photo-card">
+              <div class="photo-frame">
+                <img src="img/Corte-corse.jpg" alt="Photo — Corte, Corse">
+              </div>
+              <div class="photo-info">
+                <p class="location-label">Basé en</p>
+                <p class="location-name">Corte · Ajaccio — Corse</p>
+                <p class="location-sub">Web · UI · Visuels · Godot</p>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- PROJETS AVEC ONGLET / TRI -->
-    <section id="projects" class="space-y-8">
-      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Projets</h2>
-          <p class="text-sm text-muted">
-            Sélection de travaux web, jeu et visuels réalisés en BUT MMI.
-          </p>
-        </div>
-        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
-          Filtrer par type
-        </p>
-      </header>
-
-      <!-- Onglets / filtres -->
-      <div class="flex flex-wrap gap-2 text-xs uppercase tracking-[0.16em]">
-        <button data-filter="all"
-                class="filter-btn rounded-full bg-accent px-4 py-1.5 text-base text-baseSoft shadow-sm shadow-accent/30">
-          Tout
-        </button>
-        <button data-filter="web"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Web
-        </button>
-        <button data-filter="game"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Jeu
-        </button>
-        <button data-filter="visual"
-                class="filter-btn rounded-full border border-brown/40 bg-base px-4 py-1.5 text-muted hover:border-brown hover:text-accent transition-colors">
-          Visuels
-        </button>
-      </div>
-
-      <!-- Grille projets -->
-      <div id="projects-grid" class="grid gap-6 md:grid-cols-3">
-        <!-- cartes générées en JS -->
-      </div>
-    </section>
-
-    <!-- MINI-JEU -->
-    <section id="game" class="space-y-8">
-      <header class="flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
-        <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-accent">Mini‑jeu : Meteor Escape</h2>
-          <p class="text-sm text-muted">
-            Prototype réalisé sur Godot et exporté pour le web.
-          </p>
-        </div>
-        <p class="text-[11px] uppercase tracking-[0.18em] text-muted">
-          Jeu • Godot • Web
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div class="space-y-3 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <h3 class="text-sm font-semibold text-accent">Concept</h3>
-          <p class="text-sm text-muted leading-relaxed">
-            Meteor Escape est un mini‑jeu où le joueur doit esquiver des météorites dans un décor
-            simple et lisible. L’objectif : travailler le rythme, les feedbacks visuels et la
-            gestion des collisions.
-          </p>
-          <p class="text-sm text-muted leading-relaxed">
-            Cette version web est un prototype de niveau, jouable directement dans le navigateur
-            ou dans une fenêtre dédiée.
-          </p>
-          <ul class="mt-2 flex flex-wrap gap-2 text-[11px] text-accent">
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Godot</li>
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Export Web</li>
-            <li class="rounded-full bg-baseSoft px-2 py-0.5">Prototype</li>
-          </ul>
+      <!-- PROJETS -->
+      <section id="projects" class="reveal">
+        <div class="projects-header">
+          <div>
+            <p class="section-label">Sélection</p>
+            <h2>Projets</h2>
+            <p style="font-size:13px; margin-top:6px;">Travaux web, jeu et visuels réalisés en BUT MMI.</p>
+          </div>
+          <p style="font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--muted);">Filtrer par type</p>
         </div>
 
-        <div class="space-y-3">
-          <div class="overflow-hidden rounded-3xl border border-brown/40 bg-baseSoft shadow-md shadow-brown/20">
-            <div class="aspect-[4/3] bg-black">
+        <div class="filter-row">
+          <button class="filter-btn active" data-filter="all">Tout</button>
+          <button class="filter-btn" data-filter="web">Web</button>
+          <button class="filter-btn" data-filter="game">Jeu</button>
+          <button class="filter-btn" data-filter="visual">Visuels</button>
+        </div>
+
+        <div id="projects-grid"></div>
+      </section>
+
+      <!-- MINI-JEU -->
+      <section id="game" class="reveal">
+        <p class="section-label">Prototype interactif</p>
+        <h2>Mini‑jeu : Meteor Escape</h2>
+        <div class="divider"></div>
+
+        <div class="game-grid">
+          <div class="game-info-card">
+            <h3>Concept</h3>
+            <p>
+              Meteor Escape est un mini‑jeu où le joueur doit esquiver des météorites dans un décor
+              simple et lisible. L'objectif : travailler le rythme, les feedbacks visuels et la
+              gestion des collisions.
+            </p>
+            <p>
+              Cette version web est un prototype de niveau, jouable directement dans le navigateur
+              ou dans une fenêtre dédiée.
+            </p>
+            <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:12px;">
+              <span class="tag">Godot</span>
+              <span class="tag">Export Web</span>
+              <span class="tag">Prototype</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="game-iframe-wrap">
+              <iframe src="Game/index.html" title="Meteor Escape" loading="lazy" allowfullscreen></iframe>
+            </div>
+
+            <div style="margin-top: 12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+              <button id="game-window-btn" class="btn-secondary" type="button">
+                Ouvrir en fenêtre
+              </button>
+            </div>
+
+            <p class="game-hint">Astuce : pour un meilleur confort, joue en plein écran sur ordinateur.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- COMPÉTENCES -->
+      <section id="skills" class="reveal">
+        <p class="section-label">Progression</p>
+        <h2>Compétences</h2>
+        <div class="divider"></div>
+
+        <div class="skills-grid" id="skills-grid">
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Intégration web (HTML / CSS)</span>
+              <span class="skill-level">Intermédiaire</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" style="--w:0.75"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">JavaScript</span>
+              <span class="skill-level">En cours</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" style="--w:0.33"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Design / UI</span>
+              <span class="skill-level">À l'aise</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" style="--w:0.80"></div></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-header">
+              <span class="skill-name">Jeu vidéo (Godot)</span>
+              <span class="skill-level">Découverte</span>
+            </div>
+            <div class="skill-bar"><div class="skill-fill" style="--w:0.25"></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- À PROPOS -->
+      <section id="about" class="reveal">
+        <p class="section-label">Qui je suis</p>
+        <h2>À propos</h2>
+        <div class="divider"></div>
+
+        <div class="about-grid">
+          <div class="about-card">
+            <p>
+              Je m'appelle <strong>Ismaël Saghir</strong>, étudiant en 1ʳᵉ année de BUT MMI en Corse.
+              Je m'intéresse à la manière dont un site peut rester simple tout en racontant une
+              histoire claire, grâce à la typographie, aux espaces et aux images.
+            </p>
+            <p>
+              Ce portfolio rassemble une sélection de projets web, un mini‑jeu et des créations
+              graphiques réalisées pendant ma formation. L'objectif est de montrer une base solide
+              en intégration et une curiosité pour l'interactivité.
+            </p>
+          </div>
+
+          <aside class="about-aside">
+            <h3>Repères rapides</h3>
+            <ul>
+              <li>BUT MMI — Università di Corsica</li>
+              <li>Basé entre Corte et Ajaccio</li>
+              <li>Web · UI · Jeu vidéo · Visuels</li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="reveal">
+        <p class="section-label">Échangeons</p>
+        <h2>Contact</h2>
+        <div class="divider"></div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <form action="mailto:ismael.sag@icloud.com" method="POST" enctype="text/plain">
+              <div class="form-group">
+                <label for="name">Nom / Prénom</label>
+                <input id="name" name="Nom" type="text" required placeholder="Jean Dupont">
+              </div>
+              <div class="form-group">
+                <label for="email">Adresse e‑mail</label>
+                <input id="email" name="Email" type="email" required placeholder="jean@exemple.com">
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="Message" rows="4" required placeholder="Bonjour Ismaël…"></textarea>
+              </div>
+              <button type="submit" class="btn-primary">Envoyer</button>
+            </form>
+
+            <div class="contact-links">
+              <a href="mailto:ismael.sag@icloud.com">ismael.sag@icloud.com</a>
+              <a href="https://github.com/Isma2a" target="_blank" rel="noopener">github.com/Isma2a</a>
+            </div>
+          </div>
+
+          <div class="contact-aside">
+            <h3>Localisation</h3>
+            <p>Basé en Corse, entre Ajaccio et Corte. Position approximative à Ajaccio.</p>
+            <div class="map-wrap">
               <iframe
-                src="Game/index.html"
-                title="Meteor Escape — mini‑jeu Godot"
-                loading="lazy"
-                class="h-full w-full border-0"
-                allowfullscreen
-              ></iframe>
+                src="https://www.google.com/maps?q=5+Avenue+Mar%C3%A9chal+Lyautey+Ajaccio+Corse&output=embed"
+                height="200"
+                allowfullscreen loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                title="Ajaccio, Corse"></iframe>
             </div>
           </div>
-
-          <button
-            id="game-window-btn"
-            type="button"
-            class="inline-flex items-center gap-2 rounded-full border border-brown/40 bg-base px-4 py-2 text-xs font-medium uppercase tracking-[0.16em] text-accent shadow-sm shadow-brown/20 hover:bg-baseSoft hover:border-brown transition-colors">
-            Ouvrir en fenêtre 1200×1080
-          </button>
-
-          <p class="text-xs text-muted">
-            Astuce : pour un meilleur confort, joue en plein écran sur ordinateur. Sur mobile, les
-            performances peuvent varier.
-          </p>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- COMPÉTENCES -->
-    <section id="skills" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Compétences</h2>
-        <p class="text-sm text-muted">
-          Les domaines sur lesquels je progresse en ce moment.
-        </p>
-      </header>
-
-      <div class="grid gap-5 sm:grid-cols-2">
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Intégration web (HTML / CSS)</span><span>Intermédiaire</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-3/4 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>JavaScript</span><span>En cours</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-1/3 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Design / UI</span><span>À l’aise</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-4/5 rounded-full bg-accent"></div>
-          </div>
-        </div>
-
-        <div class="rounded-2xl bg-baseSoft/60 px-4 py-3 shadow-sm shadow-brown/20">
-          <div class="mb-2 flex items-center justify-between text-xs text-muted">
-            <span>Jeu vidéo (Godot)</span><span>Découverte</span>
-          </div>
-          <div class="h-1.5 rounded-full bg-white/70">
-            <div class="h-full w-1/4 rounded-full bg-accent"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- À PROPOS -->
-    <section id="about" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">À propos</h2>
-        <p class="text-sm text-muted">
-          Qui je suis et ce que je cherche à construire.
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
-        <article class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <p class="text-sm text-muted leading-relaxed">
-            Je m’appelle <strong>Ismaël Saghir</strong>, étudiant en 1ʳᵉ année de BUT MMI en Corse.
-            Je m’intéresse à la manière dont un site peut rester simple tout en racontant une
-            histoire claire, grâce à la typographie, aux espaces et aux images.
-          </p>
-          <p class="text-sm text-muted leading-relaxed">
-            Ce portfolio rassemble une sélection de projets web, un mini‑jeu et des créations
-            graphiques réalisées pendant ma formation. L’objectif est de montrer une base solide
-            en intégration et une curiosité pour l’interactivité.
-          </p>
-        </article>
-
-        <aside class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
-          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-            Repères rapides
-          </h3>
-          <ul class="space-y-1 text-sm text-muted">
-            <li>• BUT MMI — Università di Corsica</li>
-            <li>• Basé entre Corte et Ajaccio</li>
-            <li>• Intérêt : web, UI, jeu vidéo, visuels</li>
-          </ul>
-        </aside>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="space-y-8">
-      <header class="space-y-2">
-        <h2 class="text-xl sm:text-2xl font-semibold text-accent">Contact</h2>
-        <p class="text-sm text-muted">
-          Pour un stage, une question ou un retour sur les projets.
-        </p>
-      </header>
-
-      <div class="grid gap-6 md:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)]">
-        <div class="space-y-4 rounded-3xl bg-white/80 px-5 py-6 shadow-md shadow-brown/15">
-          <form
-            class="space-y-4 text-sm"
-            action="mailto:ismael.sag@icloud.com"
-            method="POST"
-            enctype="text/plain">
-            <div class="space-y-1">
-              <label for="name">Nom / Prénom</label>
-              <input id="name" name="Nom" type="text" required
-                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
-            </div>
-            <div class="space-y-1">
-              <label for="email">Adresse e‑mail</label>
-              <input id="email" name="Email" type="email" required
-                     class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent">
-            </div>
-            <div class="space-y-1">
-              <label for="message">Message</label>
-              <textarea id="message" name="Message" rows="4" required
-                        class="w-full rounded-md border border-brown/30 bg-baseSoft px-3 py-2 text-ink outline-none focus:border-accent"></textarea>
-            </div>
-            <button type="submit"
-                    class="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-[0.16em] text-base shadow-md shadow-accent/30 hover:bg-brown transition-colors">
-              Envoyer
-            </button>
-          </form>
-
-          <div class="space-y-1 text-sm text-muted">
-            <p>• Mail : <a href="mailto:ismael.sag@icloud.com" class="hover:text-accent">ismael.sag@icloud.com</a></p>
-            <p>• GitHub : <a href="https://github.com/Isma2a" target="_blank" rel="noopener" class="hover:text-accent">Isma2a</a></p>
-            <p>• LinkedIn : en mise à jour</p>
-          </div>
-        </div>
-
-        <div class="space-y-3 rounded-3xl bg-baseSoft/80 px-5 py-6 shadow-sm shadow-brown/15">
-          <h3 class="text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-            Localisation
-          </h3>
-          <p class="text-sm text-muted">
-            Basé en Corse, entre Ajaccio et Corte. La carte indique une position approximative à Ajaccio.
-          </p>
-          <div class="overflow-hidden rounded-2xl border border-brown/30">
-            <iframe
-              src="https://www.google.com/maps?q=5+Avenue+Mar%C3%A9chal+Lyautey+Ajaccio+Corse&output=embed"
-              height="220"
-              style="border:0; width:100%;"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-              title="5 Avenue Maréchal Lyautey, Ajaccio"
-            ></iframe>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div><!-- /container -->
   </main>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-brown/20 py-6">
-    <p class="text-center text-xs text-muted">
-      © <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.
-    </p>
+  <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
+  <footer>
+    <p>© <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.</p>
   </footer>
 
-  <!-- JS : nav + filtres projets + bouton jeu -->
+  <!-- ─── JS ───────────────────────────────────────────────────────── -->
   <script>
-    // 1. GESTION DU DARK MODE
-    const themeToggle = document.getElementById('theme-toggle');
-    const sunIcon = document.getElementById('sun-icon');
-    const moonIcon = document.getElementById('moon-icon');
-
-    const updateIcons = (isDark) => {
-      sunIcon.classList.toggle('hidden', !isDark);
-      moonIcon.classList.toggle('hidden', isDark);
-    };
-
-    // Chargement initial
-    if (
-      localStorage.theme === 'dark' ||
-      (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)
-    ) {
-      document.documentElement.classList.add('dark');
-      updateIcons(true);
-    } else {
-      updateIcons(false);
-    }
-
-    if (themeToggle) {
-      themeToggle.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-        const isDark = document.documentElement.classList.contains('dark');
-        localStorage.theme = isDark ? 'dark' : 'light';
-        updateIcons(isDark);
-      });
-    }
-
-    // 2. ANNÉE
+    /* ── Année ─────────────────────────────────────────────────────── */
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // 3. MENU MOBILE
-    const navToggle = document.getElementById('nav-toggle');
-    const navMobile = document.getElementById('nav-mobile');
-    const line1 = document.getElementById('line-1');
-    const line2 = document.getElementById('line-2');
-    const line3 = document.getElementById('line-3');
+    /* ── Dark mode ──────────────────────────────────────────────────── */
+    const html       = document.documentElement;
+    const sunIcon    = document.getElementById('sun-icon');
+    const moonIcon   = document.getElementById('moon-icon');
+    const themeBtn   = document.getElementById('theme-toggle');
 
-    if (navToggle && navMobile) {
-      navToggle.addEventListener('click', () => {
-        navMobile.classList.toggle('hidden');
-
-        if (line1 && line2 && line3) {
-          line1.classList.toggle('translate-y-[-5px]');
-          line1.classList.toggle('rotate-45');
-          line3.classList.toggle('translate-y-[5px]');
-          line3.classList.toggle('-rotate-45');
-          line2.classList.toggle('opacity-0');
-        }
-      });
+    function applyTheme(dark) {
+      html.classList.toggle('dark', dark);
+      sunIcon.style.display  = dark ? 'block' : 'none';
+      moonIcon.style.display = dark ? 'none'  : 'block';
+      localStorage.theme = dark ? 'dark' : 'light';
     }
 
-    // 4. SCROLL DOUX
-    document.querySelectorAll('a[href^="#"]').forEach(link => {
-      link.addEventListener('click', e => {
-        const id = link.getAttribute('href');
-        const target = document.querySelector(id);
+    // Init
+    const prefersDark  = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const storedTheme  = localStorage.theme;
+    const initDark     = storedTheme === 'dark' || (!storedTheme && prefersDark);
+    applyTheme(initDark);
+
+    themeBtn.addEventListener('click', () => {
+      applyTheme(!html.classList.contains('dark'));
+    });
+
+    /* ── Mobile nav ─────────────────────────────────────────────────── */
+    const navToggle = document.getElementById('nav-toggle');
+    const navMobile = document.getElementById('nav-mobile');
+
+    // Affiche le burger seulement sous 768px
+    function updateBurgerVisibility() {
+      navToggle.style.display = window.innerWidth < 768 ? 'flex' : 'none';
+    }
+    updateBurgerVisibility();
+    window.addEventListener('resize', updateBurgerVisibility);
+
+    navToggle.addEventListener('click', () => {
+      navMobile.classList.toggle('open');
+    });
+
+    // Ferme le mobile nav sur clic lien
+    navMobile.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => navMobile.classList.remove('open'));
+    });
+
+    /* ── Smooth scroll ──────────────────────────────────────────────── */
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth' });
-          if (navMobile && !navMobile.classList.contains('hidden')) {
-            navMobile.classList.add('hidden');
-          }
         }
       });
     });
 
-    // 5. DONNÉES PROJETS (UNE SEULE FOIS)
+    /* ── Données projets ────────────────────────────────────────────── */
     const projects = [
       {
         title: "Mini chat médical",
@@ -491,7 +1264,7 @@
         title: "Page web gaming",
         type: "web",
         image: "img/Site_gaming_srcs.png",
-        description: "Page d’accueil inspirée des interfaces de plateforme de jeu.",
+        description: "Page d'accueil inspirée des interfaces de plateforme de jeu.",
         tags: ["Maquette", "HTML", "CSS"],
         url: "src/gaming-site/index.html"
       },
@@ -529,71 +1302,83 @@
       }
     ];
 
-    const grid = document.getElementById('projects-grid');
-    const filterBtns = document.querySelectorAll('.filter-btn');
+    const typeLabels = { web: "Web", game: "Jeu", visual: "Visuel" };
 
     function renderProjects(filter = "all") {
-      if (!grid) return;
+      const grid     = document.getElementById('projects-grid');
+      const filtered = filter === "all" ? projects : projects.filter(p => p.type === filter);
       grid.innerHTML = "";
 
-      const filtered = filter === "all"
-        ? projects
-        : projects.filter(p => p.type === filter);
-
-      filtered.forEach(p => {
+      filtered.forEach((p, i) => {
         const card = document.createElement('article');
-        card.className =
-          "group flex flex-col gap-3 rounded-2xl bg-white dark:bg-darkCard shadow-md shadow-brown/15 overflow-hidden";
+        card.className = 'project-card';
+        card.style.animationDelay = `${i * 60}ms`;
+
+        const titleEl = p.url
+          ? `<a class="card-title" href="${p.url}" target="_blank" rel="noopener">${p.title}</a>`
+          : `<span class="card-title" style="cursor:default">${p.title}</span>`;
 
         card.innerHTML = `
-          <div class="overflow-hidden bg-baseSoft dark:bg-darkBase">
-            <img src="${p.image}" alt="${p.title}"
-                 class="h-40 w-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="card-img">
+            <img src="${p.image}" alt="${p.title}" loading="lazy">
+            <span class="card-type-badge">${typeLabels[p.type] || p.type}</span>
           </div>
-          <div class="flex flex-1 flex-col gap-2 px-4 pb-4 pt-3">
-            <h3 class="text-sm font-semibold text-accent dark:text-base">
-              ${
-                p.url
-                  ? `<a href="${p.url}" target="_blank" rel="noopener" class="hover:text-brown transition-colors">${p.title}</a>`
-                  : p.title
-              }
-            </h3>
-            <p class="text-xs text-muted dark:text-base/80 leading-relaxed">${p.description}</p>
-            <ul class="mt-1 flex flex-wrap gap-2 text-[11px] text-accent">
-              ${p.tags.map(t => `<li class="rounded-full bg-baseSoft dark:bg-darkBase px-2 py-0.5">${t}</li>`).join("")}
-            </ul>
+          <div class="card-body">
+            ${titleEl}
+            <p class="card-desc">${p.description}</p>
+            <div class="card-tags">
+              ${p.tags.map(t => `<span class="tag">${t}</span>`).join("")}
+            </div>
           </div>
+          ${p.url ? `<div class="card-arrow">
+            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M7 17L17 7M7 7h10v10"/>
+            </svg>
+          </div>` : ''}
         `;
         grid.appendChild(card);
       });
     }
 
-    // init
     renderProjects("all");
 
-    // 6. FILTRES
-    filterBtns.forEach(btn => {
+    /* ── Filtres projets ────────────────────────────────────────────── */
+    document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const filter = btn.getAttribute('data-filter');
-        renderProjects(filter);
-
-        filterBtns.forEach(b => {
-          b.classList.remove("bg-accent", "text-base", "shadow-accent/30");
-          b.classList.add("bg-base", "text-muted");
-        });
-
-        btn.classList.add("bg-accent", "text-base", "shadow-accent/30");
-        btn.classList.remove("bg-base", "text-muted");
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderProjects(btn.dataset.filter);
       });
     });
 
-    // 7. BOUTON JEU EN FENÊTRE
-    const gameBtn = document.getElementById('game-window-btn');
-    if (gameBtn) {
-      gameBtn.addEventListener('click', () => {
-        window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080');
+    /* ── Bouton jeu ─────────────────────────────────────────────────── */
+    document.getElementById('game-window-btn').addEventListener('click', () => {
+      window.open('Game/index.html', 'meteorEscape', 'width=1200,height=1080');
+    });
+
+    /* ── Scroll reveal ──────────────────────────────────────────────── */
+    const revealObserver = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    /* ── Skill bars ─────────────────────────────────────────────────── */
+    // Anime les barres quand la section entre dans le viewport
+    const skillObserver = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.skill-fill').forEach(fill => {
+            const w = parseFloat(fill.style.getPropertyValue('--w') || 0);
+            fill.style.transform = `scaleX(${w})`;
+          });
+        }
       });
-    }
+    }, { threshold: 0.2 });
+
+    const skillsSection = document.getElementById('skills');
+    if (skillsSection) skillObserver.observe(skillsSection);
   </script>
+
 </body>
 </html>
