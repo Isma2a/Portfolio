@@ -80,6 +80,8 @@
     }
 
     /* ─── GRAIN OVERLAY ─────────────────────────────────────────────── */
+    /* FIX: removed invalid CSS property "aria-hidden: true" from pseudo-element
+       (aria-hidden is an HTML attribute, not a CSS property) */
     body::before {
       content: '';
       position: fixed;
@@ -89,7 +91,6 @@
       opacity: 0.025;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
-      aria-hidden: true;
     }
 
     /* ─── TYPOGRAPHY ────────────────────────────────────────────────── */
@@ -145,6 +146,8 @@
       text-decoration: none;
     }
 
+    /* FIX: removed invalid CSS property "aria-hidden: true" —
+       aria-hidden="true" is correctly set on the HTML element itself */
     .logo-badge {
       width: 36px; height: 36px;
       border-radius: 50%;
@@ -157,7 +160,6 @@
       letter-spacing: 0.12em;
       color: var(--accent);
       transition: background var(--transition), border-color var(--transition), color var(--transition);
-      aria-hidden: true;
     }
 
     .logo-sub {
@@ -587,6 +589,8 @@
       margin-top: 4px;
     }
 
+    /* FIX: removed invalid CSS property "aria-hidden: true" —
+       aria-hidden="true" is correctly set on the HTML element in the JS template */
     .card-arrow {
       position: absolute;
       bottom: 16px; right: 16px;
@@ -598,7 +602,6 @@
       opacity: 0;
       transform: translate(4px, 4px);
       transition: opacity 0.25s, transform 0.25s;
-      aria-hidden: true;
     }
 
     .project-card:hover .card-arrow {
@@ -811,11 +814,12 @@
       gap: 8px;
     }
 
+    /* FIX: removed invalid CSS property "aria-hidden: true" from pseudo-element
+       (pseudo-elements are already ignored by screen readers) */
     .about-aside li::before {
       content: '—';
       color: var(--brown-light);
       font-size: 11px;
-      aria-hidden: true;
     }
 
     /* ─── CONTACT ───────────────────────────────────────────────────── */
@@ -888,11 +892,11 @@
       gap: 8px;
     }
 
+    /* FIX: removed invalid CSS property "aria-hidden: true" from pseudo-element */
     .contact-links a::before {
       content: '→';
       color: var(--brown-light);
       font-size: 12px;
-      aria-hidden: true;
     }
 
     .contact-links a:hover { color: var(--accent); }
@@ -980,6 +984,20 @@
       transition: top 0.2s;
     }
     .skip-link:focus { top: 0; }
+
+    /* ─── REDUCED MOTION ────────────────────────────────────────────── */
+    /* FIX: added prefers-reduced-motion support for Lighthouse accessibility */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .reveal {
+        opacity: 1;
+        transform: none;
+      }
+    }
   </style>
 </head>
 
@@ -1150,11 +1168,14 @@
                 </svg>
                 <span>Lancer le jeu</span>
               </button>
+              <!-- FIX: removed "allow-same-origin" from sandbox — combining allow-scripts
+                   and allow-same-origin breaks sandboxing (HTML validator warning + Lighthouse best practices).
+                   If the Godot game requires IndexedDB saves, re-add allow-same-origin only if needed. -->
               <iframe
                 id="game-iframe"
                 title="Meteor Escape — mini-jeu Godot"
                 allowfullscreen
-                sandbox="allow-scripts allow-same-origin allow-pointer-lock"
+                sandbox="allow-scripts allow-pointer-lock"
                 loading="lazy"></iframe>
             </div>
 
@@ -1254,7 +1275,7 @@
 
         <div class="contact-grid">
           <div class="contact-card">
-            <!-- Formulaire via Formspree (HTTPS) — évite le mixed content mailto -->
+            <!-- Formulaire via Formspree (HTTPS) -->
             <form
               id="contact-form"
               action="https://formspree.io/f/xdkewrgv"
@@ -1264,35 +1285,35 @@
 
               <div class="form-group">
                 <label for="name">Nom / Prénom</label>
+                <!-- FIX: removed aria-required="true" — redundant when required attribute is present -->
                 <input
                   id="name"
                   name="Nom"
                   type="text"
                   required
                   placeholder="Jean Dupont"
-                  autocomplete="name"
-                  aria-required="true">
+                  autocomplete="name">
               </div>
               <div class="form-group">
                 <label for="email">Adresse e‑mail</label>
+                <!-- FIX: removed aria-required="true" — redundant when required attribute is present -->
                 <input
                   id="email"
                   name="Email"
                   type="email"
                   required
                   placeholder="jean@exemple.com"
-                  autocomplete="email"
-                  aria-required="true">
+                  autocomplete="email">
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
+                <!-- FIX: removed aria-required="true" — redundant when required attribute is present -->
                 <textarea
                   id="message"
                   name="Message"
                   rows="4"
                   required
-                  placeholder="Bonjour Ismaël…"
-                  aria-required="true"></textarea>
+                  placeholder="Bonjour Ismaël…"></textarea>
               </div>
               <button type="submit" class="btn-primary">Envoyer</button>
               <p id="form-status" role="status" aria-live="polite" style="margin-top:10px;font-size:12px;color:var(--brown);"></p>
@@ -1308,9 +1329,10 @@
             <h3>Localisation</h3>
             <p>Basé en Corse, entre Ajaccio et Corte. Position approximative à Ajaccio.</p>
             <div class="map-wrap">
+              <!-- FIX: removed invalid width="100%" attribute — CSS (.map-wrap iframe { width: 100% }) handles sizing.
+                   HTML spec requires an integer for the width attribute on iframes. -->
               <iframe
                 src="https://www.google.com/maps?q=Ajaccio+Corse+France&output=embed"
-                width="100%"
                 height="200"
                 loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"
@@ -1339,7 +1361,6 @@
     const sunIcon   = document.getElementById('sun-icon');
     const moonIcon  = document.getElementById('moon-icon');
     const themeBtn  = document.getElementById('theme-toggle');
-    const metaTheme = document.querySelector('meta[name="theme-color"]');
 
     function applyTheme(dark) {
       html.classList.toggle('dark', dark);
