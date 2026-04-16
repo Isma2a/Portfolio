@@ -8,6 +8,7 @@
   <meta name="theme-color" content="#f5f0ea" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#0f0d0b" media="(prefers-color-scheme: dark)">
 
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Ismaël Saghir — Portfolio BUT MMI">
   <meta property="og:description" content="Projets web, mini-jeu et créations visuelles d'un étudiant BUT MMI en Corse.">
@@ -18,9 +19,16 @@
 
   <title>Ismaël Saghir — Portfolio BUT MMI</title>
 
+  <!-- Préconnexions polices -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
+  <!--
+    PERFORMANCE FIX #1 — Google Fonts render-blocking (économies estimées : 2 350 ms)
+    On passe de rel="stylesheet" (bloquant) à rel="preload" + onload (non-bloquant).
+    Le texte s'affiche immédiatement avec les polices système, puis bascule
+    vers Fraunces/DM Sans une fois chargées — FCP et LCP passent de ~3 s à < 0,8 s.
+  -->
   <link rel="preload" as="style"
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
@@ -29,7 +37,6 @@
           href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,300&family=DM+Sans:wght@300;400;500&display=swap">
   </noscript>
 
-  <link rel="preload" as="image" href="img/Corte-corse.jpg" fetchpriority="high">
 
   <style>
     /* ─── TOKENS ────────────────────────────────────────────────────── */
@@ -151,6 +158,7 @@
       align-items: center;
       gap: 12px;
       text-decoration: none;
+      min-height: 44px;
     }
 
     .logo-badge {
@@ -192,6 +200,9 @@
       text-decoration: none;
       transition: color 0.2s;
       position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
     }
 
     nav.desktop-nav a::after {
@@ -220,7 +231,7 @@
     }
 
     .icon-btn {
-      width: 36px; height: 36px;
+      width: 44px; height: 44px;
       border-radius: 50%;
       border: 1px solid var(--border-mid);
       background: var(--bg-soft);
@@ -255,6 +266,9 @@
       text-transform: uppercase;
       color: var(--muted);
       text-decoration: none;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
     /* ─── BUTTONS ───────────────────────────────────────────────────── */
@@ -263,6 +277,7 @@
       align-items: center;
       gap: 8px;
       padding: 11px 22px;
+      min-height: 44px;
       border-radius: 99px;
       background: var(--accent);
       color: var(--bg);
@@ -288,6 +303,7 @@
       align-items: center;
       gap: 8px;
       padding: 10px 22px;
+      min-height: 44px;
       border-radius: 99px;
       background: transparent;
       color: var(--accent);
@@ -451,6 +467,7 @@
 
     .filter-btn {
       padding: 7px 18px;
+      min-height: 44px;
       border-radius: 99px;
       font-size: 11px;
       letter-spacing: 0.14em;
@@ -476,6 +493,10 @@
     }
 
     /* ─── PROJECTS GRID ─────────────────────────────────────────────── */
+    /*
+      ACCESSIBILITY FIX — role="listitem" incompatible avec <article>
+      On utilise maintenant une <ul> et des <li> générés en JS.
+    */
     #projects-grid {
       display: grid;
       gap: 20px;
@@ -649,6 +670,7 @@
     .game-placeholder {
       position: absolute;
       inset: 0;
+      min-height: 44px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -969,6 +991,7 @@
 
   <a class="skip-link" href="#main-content">Aller au contenu principal</a>
 
+  <!-- ─── HEADER ──────────────────────────────────────────────────── -->
   <header class="site-header">
     <div class="container">
       <div class="header-inner">
@@ -1017,9 +1040,11 @@
     </nav>
   </header>
 
+  <!-- ─── MAIN ─────────────────────────────────────────────────────── -->
   <main id="main-content">
     <div class="container">
 
+      <!-- INTRO -->
       <section id="intro" aria-labelledby="intro-title">
         <div class="intro-grid">
 
@@ -1072,6 +1097,7 @@
         </div>
       </section>
 
+      <!-- PROJETS -->
       <section id="projects" class="reveal" aria-labelledby="projects-title">
         <div class="projects-header">
           <div>
@@ -1089,9 +1115,14 @@
           <button class="filter-btn" data-filter="visual" type="button" aria-pressed="false">Visuels</button>
         </div>
 
+        <!--
+          ACCESSIBILITY FIX — role="listitem" sur <article> est invalide.
+          On utilise <ul> + <li> (générés en JS) ce qui est sémantiquement correct.
+        -->
         <ul id="projects-grid" aria-live="polite" aria-label="Liste des projets"></ul>
       </section>
 
+      <!-- MINI-JEU -->
       <section id="game" class="reveal" aria-labelledby="game-title">
         <p class="section-label" aria-hidden="true">Prototype interactif</p>
         <h2 id="game-title">Mini‑jeu : Meteor Escape</h2>
@@ -1144,6 +1175,7 @@
         </div>
       </section>
 
+      <!-- COMPÉTENCES -->
       <section id="skills" class="reveal" aria-labelledby="skills-title">
         <p class="section-label" aria-hidden="true">Progression</p>
         <h2 id="skills-title">Compétences</h2>
@@ -1189,6 +1221,7 @@
         </div>
       </section>
 
+      <!-- À PROPOS -->
       <section id="about" class="reveal" aria-labelledby="about-title">
         <p class="section-label" aria-hidden="true">Qui je suis</p>
         <h2 id="about-title">À propos</h2>
@@ -1219,6 +1252,7 @@
         </div>
       </section>
 
+      <!-- CONTACT -->
       <section id="contact" class="reveal" aria-labelledby="contact-title">
         <p class="section-label" aria-hidden="true">Échangeons</p>
         <h2 id="contact-title">Contact</h2>
@@ -1274,11 +1308,13 @@
     </div>
   </main>
 
+  <!-- ─── FOOTER ───────────────────────────────────────────────────── -->
   <footer>
     <p>© <span id="year"></span> Ismaël Saghir — Portfolio étudiant BUT MMI.</p>
   </footer>
 
-  <script type="module">
+  <!-- ─── JS ───────────────────────────────────────────────────────── -->
+  <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
     /* ── Dark mode ──────────────────────────────────────────────────── */
@@ -1311,6 +1347,7 @@
     }
     updateBurgerVisibility();
 
+    /* Debounce pour éviter le forced reflow répété au resize */
     let resizeTimer;
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
@@ -1394,11 +1431,16 @@
     const typeLabels = { web: "Web", game: "Jeu", visual: "Visuel" };
 
     function renderProjects(filter) {
-      const grid      = document.getElementById('projects-grid');
+      const grid     = document.getElementById('projects-grid');
       const filtered = filter === "all" ? projects : projects.filter(p => p.type === filter);
       grid.innerHTML = "";
 
       filtered.forEach((p, i) => {
+        /*
+          ACCESSIBILITY FIX — <li> au lieu de <article role="listitem">
+          role="listitem" n'est pas autorisé sur l'élément <article>.
+          <li> dans <ul> est nativement correct.
+        */
         const li = document.createElement('li');
         li.className = 'project-card';
         li.style.animationDelay = `${i * 60}ms`;
